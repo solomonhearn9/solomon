@@ -6,12 +6,37 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastFocusedElement = null;
 
     if (navToggle && navOverlay && navPanel) {
+        const navMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+        const setNavRevealOrigin = () => {
+            if (navMotionQuery.matches) {
+                return;
+            }
+
+            const toggleRect = navToggle.getBoundingClientRect();
+            const originX = toggleRect.left + toggleRect.width / 2;
+            const originY = toggleRect.top + toggleRect.height / 2;
+
+            navOverlay.style.setProperty('--nav-origin-x', `${originX}px`);
+            navOverlay.style.setProperty('--nav-origin-y', `${originY}px`);
+        };
+
+        const handleNavResize = () => {
+            if (navOverlay.classList.contains('is-open')) {
+                setNavRevealOrigin();
+            }
+        };
+
+        window.addEventListener('resize', handleNavResize);
+
         const openNav = () => {
             if (navOverlay.classList.contains('is-open')) {
                 return;
             }
 
             lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+            setNavRevealOrigin();
+
             navOverlay.classList.add('is-open');
             navToggle.classList.add('is-active');
             document.body.classList.add('nav-open');
@@ -73,10 +98,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    const servicesCard = servicesSection.querySelector('.services-card');
     const expertLabel = servicesSection.querySelector('.expert-label');
     const serviceItems = Array.from(servicesSection.querySelectorAll('.services-list .service-item'));
-    if (!servicesCard || !expertLabel || serviceItems.length === 0) {
+    if (!expertLabel || serviceItems.length === 0) {
         return;
     }
 
@@ -138,48 +162,57 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.registerPlugin(ScrollTrigger);
 
         calculateOffsets();
-        const totalSteps = Math.max(serviceItems.length - 1, 1);
         applyLabelTransform(itemOffsets[0] || 0);
         setActiveService(0);
 
-        servicesTimeline = gsap.timeline({
-            defaults: { duration: 1, ease: 'power2.out' },
+        const transitions = serviceItems.length - 1;
+        if (transitions <= 0) {
+            activateStaticState();
+            return;
+        }
+
+        const progressProxy = { value: 0 };
+        const scrollDistance = serviceItems.length * 100;
+        const snapStep = 1 / transitions;
+
+        servicesTimeline = gsap.to(progressProxy, {
+            value: transitions,
+            ease: 'none',
             scrollTrigger: {
                 id: 'services-scroll',
                 trigger: servicesSection,
                 start: 'top top',
-                end: '+=300%',
+                end: `+=${scrollDistance}%`,
                 scrub: true,
-                pin: servicesCard,
+                pin: servicesSection,
                 pinSpacing: true,
                 anticipatePin: 1,
-                snap: serviceItems.length > 1 ? {
-                    snapTo: (value) => {
-                        const step = 1 / totalSteps;
-                        return Math.round(value / step) * step;
-                    },
-                    duration: { min: 0.1, max: 0.3 },
+                snap: {
+                    snapTo: (value) => Math.round(value / snapStep) * snapStep,
+                    duration: { min: 0.18, max: 0.38 },
                     ease: 'power1.inOut'
-                } : false,
-                onUpdate: (self) => {
-                    const stepFloat = self.progress * totalSteps;
-                    const clampedIndex = Math.min(serviceItems.length - 1, Math.max(0, Math.round(stepFloat)));
-                    setActiveService(clampedIndex);
                 },
                 onRefresh: () => {
                     calculateOffsets();
-                    const progress = servicesTimeline?.scrollTrigger?.progress || 0;
-                    const activeIndex = Math.min(serviceItems.length - 1, Math.max(0, Math.round(progress * totalSteps)));
-                    applyLabelTransform(itemOffsets[activeIndex] || 0);
+                    const progressValue = (servicesTimeline?.scrollTrigger?.progress || 0) * transitions;
+                    const activeIndex = Math.min(serviceItems.length - 1, Math.max(0, Math.round(progressValue)));
+                    const targetOffset = itemOffsets[activeIndex] || 0;
+                    applyLabelTransform(targetOffset);
                     setActiveService(activeIndex);
                 }
-            }
-        });
+            },
+            onUpdate: () => {
+                const clampedValue = gsap.utils.clamp(0, transitions, progressProxy.value);
+                const baseIndex = Math.floor(clampedValue);
+                const nextIndex = Math.min(serviceItems.length - 1, baseIndex + 1);
+                const segmentProgress = clampedValue - baseIndex;
+                const startOffset = itemOffsets[baseIndex] || 0;
+                const endOffset = itemOffsets[nextIndex] || startOffset;
+                const interpolatedOffset = gsap.utils.interpolate(startOffset, endOffset, nextIndex === baseIndex ? 0 : segmentProgress);
 
-        serviceItems.slice(1).forEach((_, index) => {
-            servicesTimeline.to(expertLabel, {
-                y: () => itemOffsets[index + 1] || 0
-            });
+                applyLabelTransform(interpolatedOffset);
+                setActiveService(Math.min(serviceItems.length - 1, Math.round(clampedValue)));
+            }
         });
 
         let resizeFrame = null;
@@ -190,10 +223,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
             resizeFrame = requestAnimationFrame(() => {
                 calculateOffsets();
-                const progress = servicesTimeline?.scrollTrigger?.progress || 0;
-                const activeIndex = Math.min(serviceItems.length - 1, Math.max(0, Math.round(progress * totalSteps)));
-                applyLabelTransform(itemOffsets[activeIndex] || 0);
-                ScrollTrigger.refresh();
+                const trigger = servicesTimeline?.scrollTrigger;
+                if (trigger) {
+                    const currentProgress = trigger.progress * transitions;
+                    const baseIndex = Math.floor(currentProgress);
+                    const nextIndex = Math.min(serviceItems.length - 1, baseIndex + 1);
+                    const segmentProgress = currentProgress - baseIndex;
+                    const startOffset = itemOffsets[baseIndex] || 0;
+                    const endOffset = itemOffsets[nextIndex] || startOffset;
+                    const interpolatedOffset = gsap.utils.interpolate(startOffset, endOffset, nextIndex === baseIndex ? 0 : segmentProgress);
+
+                    applyLabelTransform(interpolatedOffset);
+                    setActiveService(Math.min(serviceItems.length - 1, Math.round(currentProgress)));
+                    trigger.refresh();
+                }
             });
         };
 
