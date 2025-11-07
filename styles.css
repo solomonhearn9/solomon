@@ -28,12 +28,17 @@ body {
 
 .hero-section {
     background-color: #000000;
-    min-height: calc(100vh - 240px);
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    padding: clamp(28px, 6vw, 56px) clamp(20px, 6vw, 80px) clamp(12px, 4vh, 32px);
+    padding: clamp(8px, 2vw, 24px) clamp(20px, 6vw, 80px) clamp(72px, 12vh, 128px);
+    overflow: visible;
+    background-image: url('dots.png'), url('dots.png');
+    background-repeat: no-repeat;
+    background-size: 50% auto;
+    background-position: left top, right top;
 }
 
 .hero-layout {
@@ -41,6 +46,9 @@ body {
     display: flex;
     flex-direction: column;
     gap: clamp(28px, 6vw, 40px);
+    position: relative;
+    z-index: 2;
+    margin: 0 auto;
 }
 
 .hero-image-container {
@@ -334,26 +342,22 @@ body.nav-open {
 }
 
 .hero-brands-bar {
-    position: relative;
-    margin-top: clamp(18px, 4vh, 32px);
-    padding: clamp(14px, 2.6vh, 22px) 0;
-    border-radius: clamp(24px, 5vw, 32px) clamp(24px, 5vw, 32px) 0 0;
-    background: linear-gradient(180deg, rgba(10, 10, 10, 0.92) 0%, rgba(0, 0, 0, 0.94) 35%, rgba(0, 0, 0, 0.98) 100%);
-    box-shadow: 0 -18px 40px rgba(0, 0, 0, 0.32);
+    position: absolute;
+    left: 50%;
+    bottom: clamp(12px, 5vh, 32px);
+    transform: translateX(-50%);
+    width: 100vw;
+    padding: clamp(12px, 2.6vw, 20px) clamp(24px, 7vw, 88px);
     overflow: hidden;
+    z-index: 3;
 }
 
 .hero-brands-bar::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    pointer-events: none;
+    display: none;
 }
 
 .hero-brands-bar .logo-marquee {
-    padding: 0 clamp(24px, 8vw, 80px);
+    padding: 0;
 }
 
 .hero-content .logo-label {
@@ -446,7 +450,7 @@ body.nav-open {
     min-height: 100vh;
     padding: 80px 24px;
     background-color: #f5f5f0;
-    margin-top: clamp(-220px, -24vh, -120px);
+    margin-top: clamp(-200px, -22vh, -120px);
 }
 
 .zigzag-background {
@@ -1179,8 +1183,8 @@ body.nav-open {
 
 @media (max-width: 767px) {
     .hero-section {
-        min-height: calc(100vh - 260px);
-        padding: clamp(24px, 9vw, 44px) clamp(16px, 8vw, 32px) clamp(10px, 5vh, 24px);
+        min-height: 100vh;
+        padding: clamp(8px, 6vw, 28px) clamp(16px, 8vw, 32px) clamp(64px, 22vh, 108px);
     }
 
     .hero-layout {
@@ -1217,11 +1221,13 @@ body.nav-open {
     }
 
     .hero-brands-bar {
-        margin-top: clamp(12px, 5vh, 20px);
+        width: 100vw;
+        bottom: clamp(12px, 12vh, 28px);
+        padding: clamp(10px, 5vw, 16px) clamp(22px, 12vw, 42px);
     }
 
     .hero-brands-bar .logo-marquee {
-        padding: 0 clamp(16px, 8vw, 80px);
+        padding: 0;
     }
     
     .hero-content .logo-label {
@@ -1319,10 +1325,10 @@ body.nav-open {
     }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 900px) {
     .hero-section {
         min-height: 100vh;
-        padding: clamp(80px, 10vh, 120px) clamp(48px, 8vw, 120px) clamp(56px, 8vh, 92px);
+        padding: clamp(32px, 4vh, 64px) clamp(48px, 7vw, 96px) clamp(84px, 12vh, 140px);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1333,12 +1339,12 @@ body.nav-open {
         align-items: center;
         justify-content: space-between;
         gap: clamp(48px, 7vw, 120px);
-        background: #050505;
-        border-radius: clamp(28px, 3vw, 48px);
-        padding: clamp(48px, 6vw, 84px) clamp(64px, 8vw, 132px);
-        width: min(1280px, 100%);
-        margin: 0 auto;
-        box-shadow: 0 42px 120px rgba(0, 0, 0, 0.55);
+        background: rgba(5, 5, 5, 0.96);
+        border-radius: clamp(24px, 3vw, 40px);
+        padding: clamp(40px, 5vw, 72px) clamp(56px, 6.5vw, 112px);
+        width: min(1180px, 96%);
+        margin: clamp(12px, 2vh, 32px) auto clamp(48px, 6vh, 80px);
+        box-shadow: 0 32px 96px rgba(0, 0, 0, 0.45);
         position: relative;
         isolation: isolate;
     }
@@ -1353,18 +1359,13 @@ body.nav-open {
         z-index: -1;
     }
 
-    .hero-image-container,
-    .hero-content {
-        flex: 0 1 50%;
-    }
-
     .hero-image-container {
-        max-width: clamp(360px, 32vw, 460px);
-        aspect-ratio: 1 / 1;
-        min-height: auto;
-        border-radius: clamp(24px, 3vw, 40px);
+        flex: 0 0 clamp(340px, 32vw, 440px);
+        max-width: clamp(340px, 32vw, 440px);
+        min-height: clamp(420px, 52vh, 520px);
+        border-radius: clamp(24px, 2.6vw, 34px);
         overflow: hidden;
-        box-shadow: 0 28px 60px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 24px 68px rgba(0, 0, 0, 0.55);
     }
 
     .hero-image {
@@ -1372,6 +1373,7 @@ body.nav-open {
     }
 
     .hero-content {
+        flex: 1;
         display: flex;
         flex-direction: column;
         gap: clamp(18px, 3vh, 28px);
@@ -1396,43 +1398,35 @@ body.nav-open {
     }
 
     .hero-brands-bar {
-        border-radius: 999px;
-        background: #050505;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        box-shadow: 0 28px 80px rgba(0, 0, 0, 0.45);
-        margin: clamp(36px, 5vh, 56px) auto 0;
-        padding: 18px clamp(48px, 8vw, 140px);
-        max-width: min(1080px, calc(100% - clamp(48px, 8vw, 120px)));
+        width: 100vw;
+        bottom: clamp(12px, 4vh, 24px);
+        padding: clamp(12px, 2vw, 20px) clamp(44px, 7vw, 120px);
     }
 
     .hero-brands-bar::before {
-        border-radius: inherit;
+        display: none;
     }
 
     .hero-brands-bar .logo-marquee {
         padding: 0;
-        overflow: visible;
-        mask-image: none;
+        overflow: hidden;
+        mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
     }
 
     .hero-brands-bar .logo-track {
-        animation: none;
-        justify-content: space-between;
-        gap: clamp(32px, 5vw, 96px);
+        animation: logo-scroll 22s linear infinite;
+        gap: clamp(48px, 7vw, 112px);
+        will-change: transform;
     }
 
     .hero-brands-bar .logo-item {
-        min-width: 0;
+        min-width: clamp(160px, 14vw, 220px);
         opacity: 0.8;
-        filter: grayscale(100%) brightness(160%);
-    }
-
-    .hero-brands-bar .logo-item:nth-child(n+6) {
-        display: none;
+        filter: grayscale(100%) brightness(150%);
     }
 
     .portfolio-section {
-        margin-top: -160px;
+        margin-top: clamp(-80px, -8vh, -32px);
     }
  }
 
