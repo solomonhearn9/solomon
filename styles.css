@@ -33,19 +33,15 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
-    padding: clamp(8px, 2vw, 24px) clamp(20px, 6vw, 80px) clamp(72px, 12vh, 128px);
+    padding: clamp(8px, 2vw, 24px) clamp(20px, 6vw, 80px) clamp(12px, 4vh, 24px);
     overflow: visible;
-    background-image: url('dots.png'), url('dots.png');
-    background-repeat: no-repeat;
-    background-size: 50% auto;
-    background-position: left top, right top;
 }
 
 .hero-layout {
     width: min(1180px, 100%);
     display: flex;
     flex-direction: column;
-    gap: clamp(28px, 6vw, 40px);
+    gap: 0;
     position: relative;
     z-index: 2;
     margin: 0 auto;
@@ -63,31 +59,32 @@ body {
 
 .hero-image {
     width: 100%;
-    height: 100%;
+    height: calc(100% + 2px);
     display: block;
     object-fit: cover;
     object-position: center top;
     border-radius: inherit;
+    margin-bottom: -2px;
 }
 
 .hero-overlay-icon {
     border: none;
     position: fixed;
-    top: 28px;
-    right: 28px;
-    width: 54px;
-    height: 54px;
+    top: 24px;
+    right: 24px;
+    width: 64px;
+    height: 64px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
     background: rgba(5, 5, 5, 0.92);
     border: 1.5px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45), inset 0 0 12px rgba(255, 255, 255, 0.04);
+    box-shadow: 0 18px 54px rgba(0, 0, 0, 0.48), inset 0 0 16px rgba(255, 255, 255, 0.05);
     z-index: 999;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    backdrop-filter: blur(18px);
+    backdrop-filter: blur(20px);
     appearance: none;
     -webkit-appearance: none;
 }
@@ -106,8 +103,8 @@ body {
 
 .hero-overlay-icon .icon-plus {
     position: relative;
-    width: 22px;
-    height: 22px;
+    width: 18px;
+    height: 18px;
     display: block;
 }
 
@@ -313,41 +310,47 @@ body.nav-open {
 }
 
 .hero-content {
-    padding: 0 clamp(8px, 2vw, 32px);
+    padding: 4px clamp(8px, 2vw, 32px) clamp(20px, 6vw, 32px);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: clamp(10px, 2.2vh, 18px);
+    gap: clamp(0px, 0.5vh, 6px);
     max-width: clamp(380px, 48vw, 560px);
+    margin-top: 0;
 }
 
 .hero-name {
     font-size: clamp(36px, 7vw, 52px);
-    font-weight: 700;
+    font-weight: 300;
     line-height: 1.08;
-    margin-bottom: 4px;
+    margin-top: 2px;
+    margin-bottom: 0;
     color: #ffffff;
-    letter-spacing: -0.022em;
+    letter-spacing: -0.015em;
     display: inline-block;
     white-space: nowrap;
     max-width: 100%;
+    font-family: 'Inter', sans-serif;
 }
 
 .hero-description {
     font-size: 17px;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 1.55;
     color: #ffffff;
     max-width: 560px;
+    font-family: 'Inter', sans-serif;
+    margin-top: -3px;
+    letter-spacing: -0.01em;
 }
 
 .hero-brands-bar {
     position: absolute;
     left: 50%;
-    bottom: clamp(12px, 5vh, 32px);
+    bottom: clamp(-56px, -4vh, -32px);
     transform: translateX(-50%);
     width: 100vw;
-    padding: clamp(12px, 2.6vw, 20px) clamp(24px, 7vw, 88px);
+    padding: clamp(6px, 1.8vw, 14px) clamp(24px, 7vw, 88px);
     overflow: hidden;
     z-index: 3;
 }
@@ -362,14 +365,16 @@ body.nav-open {
 
 .hero-content .logo-label {
     align-self: flex-start;
-    padding: 8px 18px;
+    padding: 6px 14px;
     border-radius: 999px;
     background-color: rgba(255, 255, 255, 0.08);
     color: rgba(255, 255, 255, 0.65);
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.22em;
     text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 2px;
 }
 
 .logo-marquee {
@@ -401,7 +406,7 @@ body.nav-open {
 
 .logo-item img {
     max-height: 80px;
-    max-width: 200px;
+    max-width: 260px;
     width: auto;
     filter: grayscale(100%) brightness(140%);
     opacity: 0.65;
@@ -414,7 +419,8 @@ body.nav-open {
 }
 
 .logo-walmart {
-    max-height: 114px;
+    max-height: 210px;
+    max-width: 340px;
     width: auto;
 }
 
@@ -857,12 +863,22 @@ body.nav-open {
     line-height: 1.7;
 }
 
-.testimonials-grid {
+.testimonials-carousel {
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.testimonials-track {
     display: grid;
     grid-template-columns: 1fr;
     gap: 24px;
-    max-width: 1100px;
-    margin: 0 auto;
+    width: 100%;
+}
+
+.testimonial-card--duplicate {
+    display: none;
 }
 
 .testimonial-card {
@@ -928,7 +944,8 @@ body.nav-open {
 
 .service-showcase {
     position: relative;
-    padding: clamp(92px, 18vh, 164px) 0;
+    margin-top: 0;
+    padding: clamp(52px, 14vh, 120px) 0;
     background: radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0) 42%),
         linear-gradient(135deg, #f880ae 0%, #f46f88 32%, #f26d64 52%, #f78a46 78%, #fdb356 100%);
     color: #141414;
@@ -1153,9 +1170,13 @@ body.nav-open {
         max-width: 1100px;
     }
 
-    .testimonials-grid {
+    .testimonials-track {
+        display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 28px;
+        width: 100%;
+        animation: none;
+        transform: none;
     }
 
     .testimonial-card {
@@ -1176,54 +1197,95 @@ body.nav-open {
 }
 
 @media (min-width: 1200px) {
-    .testimonials-grid {
+    .testimonials-track {
         grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .testimonials-track {
+        animation: none !important;
+        transform: none !important;
+    }
+
+    .testimonials-carousel {
+        overflow-x: auto;
     }
 }
 
 @media (max-width: 767px) {
     .hero-section {
-        min-height: 100vh;
-        padding: clamp(8px, 6vw, 28px) clamp(16px, 8vw, 32px) clamp(64px, 22vh, 108px);
+        min-height: auto;
+        height: auto;
+        padding: calc(env(safe-area-inset-top, 0px)) 0 clamp(12px, 6vh, 24px);
+        justify-content: flex-start;
+        align-items: center;
+        position: relative;
+        background-color: #000000;
+        --hero-image-stop: clamp(320px, 62vh, 460px);
+        background: linear-gradient(
+            to bottom,
+            #000000 0%,
+            #000000 var(--hero-image-stop),
+            #1e1e1f var(--hero-image-stop),
+            #1e1e1f 100%
+        );
     }
 
     .hero-layout {
-        gap: clamp(20px, 6vh, 28px);
+        gap: 0;
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: none;
+        padding-top: 0;
+        margin-top: 0;
     }
     
     .hero-overlay-icon {
-        top: 16px;
-        right: 16px;
-        width: 46px;
-        height: 46px;
+        top: 20px;
+        right: 20px;
+        width: 58px;
+        height: 58px;
     }
     
     .hero-overlay-icon .icon-plus {
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
     }
     
     .hero-image-container {
-        min-height: clamp(260px, 52vh, 380px);
+        width: 100%;
+        min-height: clamp(320px, 62vh, 460px);
+        position: relative;
+        margin-top: 0;
+        align-self: stretch;
+        border-radius: 0;
     }
 
     .hero-name {
         font-size: clamp(32px, 12vw, 44px);
+        margin-top: 2px;
     }
 
     .hero-description {
         font-size: 16px;
         max-width: 100%;
+        margin-top: 1px;
     }
 
     .hero-content {
-        padding: 0;
+        padding: 4px clamp(20px, 7vw, 32px) clamp(28px, 8vw, 38px);
+        gap: clamp(0px, 1.2vw, 6px);
+        margin-top: 0;
+        background-color: transparent;
+        align-self: stretch;
     }
 
     .hero-brands-bar {
         width: 100vw;
-        bottom: clamp(12px, 12vh, 28px);
-        padding: clamp(10px, 5vw, 16px) clamp(22px, 12vw, 42px);
+        bottom: clamp(-48px, -3vh, -24px);
+        padding: clamp(4px, 3vw, 10px) clamp(12px, 8vw, 22px);
     }
 
     .hero-brands-bar .logo-marquee {
@@ -1231,8 +1293,11 @@ body.nav-open {
     }
     
     .hero-content .logo-label {
-        font-size: 12px;
+        font-size: 11px;
         letter-spacing: 0.18em;
+        margin-top: 0;
+        margin-bottom: 2px;
+        padding: 6px 12px;
     }
     
     .logo-track {
@@ -1246,7 +1311,8 @@ body.nav-open {
     }
     
     .logo-item img {
-        max-height: 70px;
+        max-height: 90px;
+        max-width: 220px;
     }
     
     .logo-vandy,
@@ -1255,7 +1321,48 @@ body.nav-open {
     }
     
     .logo-walmart {
-        max-height: 98px;
+        max-height: 240px;
+        max-width: 300px;
+    }
+
+    .testimonials-carousel {
+        overflow: hidden;
+        padding: 6px 0;
+    }
+
+    .testimonials-track {
+        --testimonial-gap: 18px;
+        display: flex;
+        align-items: stretch;
+        gap: var(--testimonial-gap);
+        width: max-content;
+        animation: testimonials-marquee 26s linear infinite;
+        animation-direction: reverse;
+        transform: translateZ(0);
+        padding: 2px 0;
+    }
+
+    .testimonials-track:hover {
+        animation-play-state: paused;
+    }
+
+    .testimonial-card {
+        flex: 0 0 calc(88vw - 32px);
+        min-width: 260px;
+    }
+
+    .testimonial-card--duplicate {
+        display: block;
+    }
+
+    @keyframes testimonials-marquee {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(calc(-50% - var(--testimonial-gap)));
+        }
     }
 
     .nav-overlay {
@@ -1338,7 +1445,7 @@ body.nav-open {
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        gap: clamp(48px, 7vw, 120px);
+        gap: clamp(28px, 5vw, 84px);
         background: rgba(5, 5, 5, 0.96);
         border-radius: clamp(24px, 3vw, 40px);
         padding: clamp(40px, 5vw, 72px) clamp(56px, 6.5vw, 112px);
@@ -1376,7 +1483,7 @@ body.nav-open {
         flex: 1;
         display: flex;
         flex-direction: column;
-        gap: clamp(18px, 3vh, 28px);
+        gap: clamp(12px, 2.4vh, 22px);
         padding: 0;
     }
 
@@ -1538,7 +1645,8 @@ body.nav-open {
     }
 
     .service-showcase {
-        padding: clamp(72px, 18vh, 120px) 0;
+        margin-top: 0;
+        padding: clamp(48px, 16vh, 96px) 0;
     }
 
     .service-showcase-intro {
