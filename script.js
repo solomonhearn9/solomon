@@ -93,6 +93,128 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const cursorMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const pointerFineQuery = window.matchMedia('(pointer: fine)');
+    const desktopWidthQuery = window.matchMedia('(min-width: 1024px)');
+
+    const cursorFollowerState = {
+        element: null,
+        rafId: null,
+        targetX: window.innerWidth / 2,
+        targetY: window.innerHeight / 2,
+        currentX: window.innerWidth / 2,
+        currentY: window.innerHeight / 2,
+        isActive: false
+    };
+
+    const cursorFollowerHalfSize = 8;
+    const cursorFollowerEasing = 0.18;
+
+    const handlePointerMove = (event) => {
+        if (event.pointerType && event.pointerType !== 'mouse' && event.pointerType !== 'pen') {
+            return;
+        }
+
+        cursorFollowerState.targetX = event.clientX;
+        cursorFollowerState.targetY = event.clientY;
+
+        if (cursorFollowerState.element) {
+            cursorFollowerState.element.classList.add('is-visible');
+            cursorFollowerState.element.classList.remove('is-hidden');
+        }
+    };
+
+    const handlePointerLeave = () => {
+        if (cursorFollowerState.element) {
+            cursorFollowerState.element.classList.add('is-hidden');
+        }
+    };
+
+    const animateCursorFollower = () => {
+        cursorFollowerState.currentX += (cursorFollowerState.targetX - cursorFollowerState.currentX) * cursorFollowerEasing;
+        cursorFollowerState.currentY += (cursorFollowerState.targetY - cursorFollowerState.currentY) * cursorFollowerEasing;
+
+        if (cursorFollowerState.element) {
+            const translateX = cursorFollowerState.currentX - cursorFollowerHalfSize;
+            const translateY = cursorFollowerState.currentY - cursorFollowerHalfSize;
+            cursorFollowerState.element.style.transform = `translate3d(${translateX}px, ${translateY}px, 0)`;
+        }
+
+        cursorFollowerState.rafId = requestAnimationFrame(animateCursorFollower);
+    };
+
+    const teardownCursorFollower = () => {
+        if (!cursorFollowerState.isActive) {
+            return;
+        }
+
+        cursorFollowerState.isActive = false;
+
+        window.removeEventListener('pointermove', handlePointerMove);
+        window.removeEventListener('pointerleave', handlePointerLeave);
+
+        if (cursorFollowerState.rafId) {
+            cancelAnimationFrame(cursorFollowerState.rafId);
+            cursorFollowerState.rafId = null;
+        }
+
+        if (cursorFollowerState.element) {
+            cursorFollowerState.element.remove();
+            cursorFollowerState.element = null;
+        }
+    };
+
+    const setupCursorFollower = () => {
+        if (cursorFollowerState.isActive) {
+            return;
+        }
+
+        if (!pointerFineQuery.matches || !desktopWidthQuery.matches || cursorMotionQuery.matches) {
+            teardownCursorFollower();
+            return;
+        }
+
+        const follower = document.createElement('div');
+        follower.className = 'cursor-follower is-hidden';
+        follower.setAttribute('aria-hidden', 'true');
+
+        cursorFollowerState.element = follower;
+        cursorFollowerState.isActive = true;
+        cursorFollowerState.targetX = window.innerWidth / 2;
+        cursorFollowerState.targetY = window.innerHeight / 2;
+        cursorFollowerState.currentX = cursorFollowerState.targetX;
+        cursorFollowerState.currentY = cursorFollowerState.targetY;
+
+        document.body.appendChild(follower);
+
+        cursorFollowerState.rafId = requestAnimationFrame(animateCursorFollower);
+
+        window.addEventListener('pointermove', handlePointerMove);
+        window.addEventListener('pointerleave', handlePointerLeave);
+    };
+
+    const evaluateCursorFollower = () => {
+        if (pointerFineQuery.matches && desktopWidthQuery.matches && !cursorMotionQuery.matches) {
+            setupCursorFollower();
+        } else {
+            teardownCursorFollower();
+        }
+    };
+
+    const addMediaQueryListener = (query, listener) => {
+        if (typeof query.addEventListener === 'function') {
+            query.addEventListener('change', listener);
+        } else if (typeof query.addListener === 'function') {
+            query.addListener(listener);
+        }
+    };
+
+    addMediaQueryListener(pointerFineQuery, evaluateCursorFollower);
+    addMediaQueryListener(desktopWidthQuery, evaluateCursorFollower);
+    addMediaQueryListener(cursorMotionQuery, evaluateCursorFollower);
+
+    evaluateCursorFollower();
+
     const servicesSection = document.querySelector('.services-section');
     if (!servicesSection) {
         return;

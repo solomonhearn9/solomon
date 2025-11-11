@@ -9,47 +9,38 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="nav-overlay" id="mobileNav" aria-hidden="true">
-        <div class="nav-panel" role="dialog" aria-modal="true" tabindex="-1">
-            <header class="nav-panel-header">
-                <span class="nav-panel-glyph" aria-hidden="true"></span>
-                <span class="nav-panel-meta">Navigation</span>
-            </header>
-            <div class="nav-panel-body">
-                <nav class="nav-panel-menu" aria-label="Primary">
-                    <a href="#home" class="nav-panel-link nav-panel-link--outline">Home</a>
-                    <a href="#works" class="nav-panel-link nav-panel-link--solid">Works</a>
-                    <a href="#services" class="nav-panel-link nav-panel-link--solid">Services</a>
-                    <a href="#contact" class="nav-panel-link nav-panel-link--solid">Contact</a>
-                </nav>
-            </div>
-            <footer class="nav-panel-footer">
-                <p class="nav-panel-invite">Say Hi!</p>
-                <a class="nav-panel-email" href="mailto:solomonhearn9@gmail.com">solomonhearn9@gmail.com</a>
-            </footer>
-        </div>
-    </div>
-
     <!-- Hero Section -->
     <section class="hero-section" id="home">
-        <div class="hero-layout">
-            <div class="hero-image-container">
-                <img src="hero.png" alt="Solomon Hearn" class="hero-image">
-                <button class="hero-overlay-icon" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open navigation">
-                    <span class="icon-plus">
-                        <span class="icon-line"></span>
-                        <span class="icon-line"></span>
-                    </span>
-                </button>
+        <div class="hero-decor hero-decor--left" aria-hidden="true"></div>
+        <div class="hero-decor hero-decor--right" aria-hidden="true"></div>
+
+        <div class="hero-surface">
+            <header class="hero-header">
+                <span class="hero-nameplate">SOLOMON HEARN</span>
+                <a class="hero-secondary-cta" href="#contact">Lets Create!</a>
+            </header>
+
+            <div class="hero-monogram" aria-hidden="true">
+                <span class="hero-initial hero-initial--s">S</span>
+                <span class="hero-monogram-divider" role="presentation"></span>
+                <span class="hero-initial hero-initial--h">H</span>
             </div>
-            <div class="hero-content">
-                <h1 class="hero-name">Solomon Hearn</h1>
-                <p class="hero-description">Creative Director &amp; Digital Strategist helping local businesses modernize their online presence.</p>
-                <span class="logo-label">TRUSTED BY</span>
-            </div>
+
+            <h1 class="hero-title">
+                <span>Digital</span>
+                <span>Strategist</span>
+            </h1>
+
+            <p class="hero-tagline">
+                Boston-based tech consultant helping local businesses modernize their online presence.
+            </p>
+
+            <a class="hero-primary-cta" href="#contact">Lets Connect!</a>
         </div>
+
         <div class="hero-brands-bar" aria-hidden="true">
             <div class="logo-marquee">
                 <div class="logo-track">
