@@ -138,6 +138,7 @@ const ExpertiseSpotlight = () => {
   const [labelOffset, setLabelOffset] = useState(28);
   const [itemPositions, setItemPositions] = useState<number[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useLayoutEffect(() => {
     if (!labelRef.current) {
@@ -247,6 +248,27 @@ const ExpertiseSpotlight = () => {
     }
   });
 
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof window.matchMedia === "undefined") {
+      return undefined;
+    }
+
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    setIsMobile(mediaQuery.matches);
+
+    const handleChange = () => {
+      setIsMobile(mediaQuery.matches);
+    };
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
+    } else {
+      mediaQuery.addListener(handleChange);
+      return () => mediaQuery.removeListener(handleChange);
+    }
+  }, []);
+
   return (
     <motion.div
       style={{ opacity: overlayOpacity }}
@@ -259,7 +281,7 @@ const ExpertiseSpotlight = () => {
             style={{ y: containerShift }}
             className="pointer-events-none absolute left-0 top-0 text-xs font-semibold uppercase tracking-[0.35em] text-primary md:text-sm"
           >
-            Expert in
+            {isMobile ? "Expert" : "Expert in"}
           </motion.span>
           <ul
             ref={listRef}

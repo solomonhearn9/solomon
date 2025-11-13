@@ -15,6 +15,7 @@ export function SiteHeaderCta() {
     <div className="site-header__cta">
       <ShimmerButton
         onClick={handleClick}
+        shimmerSize="0.5em"
         className="px-7 py-3 text-sm font-semibold uppercase tracking-[0.3em] shadow-[0_0_18px_rgba(255,255,255,0.15)] transition-shadow duration-300 hover:shadow-[0_0_45px_rgba(255,255,255,0.5)]"
       >
         <span className="text-white">lets connect</span>

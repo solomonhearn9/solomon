@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 type AnimatedHeadlineProps = {
   prefix?: string;
+  prefixMobile?: string;
   words?: string[];
   interval?: number;
 };
@@ -13,6 +14,7 @@ const defaultWords = ["amazing", "new", "wonderful", "beautiful", "smart"];
 
 function AnimatedHeadline({
   prefix = "This is something",
+  prefixMobile,
   words = defaultWords,
   interval = 2200
 }: AnimatedHeadlineProps) {
@@ -35,21 +37,50 @@ function AnimatedHeadline({
 
   return (
     <span className="projects-dynamic-headline">
-      <span className="projects-dynamic-prefix">{prefix}</span>
-      <span className="projects-dynamic-wrapper" aria-live="polite" aria-atomic="true">
-        <AnimatePresence mode="wait">
-          <motion.span
-            key={memoizedWords[activeIndex]}
-            className="projects-dynamic-word"
-            initial={{ opacity: 0, y: "80%" }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: "-80%" }}
-            transition={{ type: "spring", stiffness: 140, damping: 18 }}
-          >
-            {memoizedWords[activeIndex]}
-          </motion.span>
-        </AnimatePresence>
+      <span className="projects-dynamic-prefix">
+        <span className="projects-dynamic-prefix-desktop">{prefix}</span>
+        {prefixMobile && (
+          <>
+            <span className="projects-dynamic-prefix-mobile">{prefixMobile}</span>
+            <br className="projects-dynamic-break" />
+          </>
+        )}
       </span>
+      {prefixMobile && (
+        <span className="projects-dynamic-second-line">
+          <span className="projects-dynamic-with-mobile">with </span>
+          <span className="projects-dynamic-wrapper" aria-live="polite" aria-atomic="true">
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={memoizedWords[activeIndex]}
+                className="projects-dynamic-word"
+                initial={{ opacity: 0, y: "80%" }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: "-80%" }}
+                transition={{ type: "spring", stiffness: 140, damping: 18 }}
+              >
+                {memoizedWords[activeIndex]}
+              </motion.span>
+            </AnimatePresence>
+          </span>
+        </span>
+      )}
+      {!prefixMobile && (
+        <span className="projects-dynamic-wrapper" aria-live="polite" aria-atomic="true">
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={memoizedWords[activeIndex]}
+              className="projects-dynamic-word"
+              initial={{ opacity: 0, y: "80%" }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: "-80%" }}
+              transition={{ type: "spring", stiffness: 140, damping: 18 }}
+            >
+              {memoizedWords[activeIndex]}
+            </motion.span>
+          </AnimatePresence>
+        </span>
+      )}
     </span>
   );
 }

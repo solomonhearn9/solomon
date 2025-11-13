@@ -88,6 +88,7 @@ export default function HomePage() {
     createInitialTouchedState()
   );
   const [formErrors, setFormErrors] = useState<Partial<Record<keyof ContactFormFields, string>>>({});
+  const [isMobile, setIsMobile] = useState(false);
 
   const fieldIds = {
     name: `${idBase}-footer-name`,
@@ -132,6 +133,25 @@ export default function HomePage() {
       observer.disconnect();
     };
   }, [isContactVisible]);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      if (typeof window !== "undefined") {
+        setIsMobile(window.innerWidth < 769);
+      }
+    };
+
+    checkMobile();
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", checkMobile);
+    }
+
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", checkMobile);
+      }
+    };
+  }, []);
 
   const validateForm = (data: ContactFormFields) => {
     const nextErrors: Partial<Record<keyof ContactFormFields, string>> = {};
@@ -251,10 +271,18 @@ export default function HomePage() {
         <section className="landing-hero" id="home">
           <div className="landing-hero__shell">
             <div className="landing-hero__pattern landing-hero__pattern--left" aria-hidden="true">
-              <Image src="/side.webp" alt="" width={240} height={480} priority />
+              <img 
+                src={isMobile ? "/side-mobile.webp" : "/side.webp"} 
+                alt="" 
+                loading="eager" 
+              />
             </div>
             <div className="landing-hero__pattern landing-hero__pattern--right" aria-hidden="true">
-              <Image src="/side.webp" alt="" width={240} height={480} priority />
+              <img 
+                src={isMobile ? "/side-mobile.webp" : "/side.webp"} 
+                alt="" 
+                loading="eager" 
+              />
             </div>
             <div className="landing-hero__core">
               <Image
@@ -319,6 +347,7 @@ export default function HomePage() {
                 <h2 className="projects-title">
                   <AnimatedHeadline
                     prefix="Elevate your brand with "
+                    prefixMobile="Elevate your brand"
                     words={["design.", "analytics.", "storytelling.", "creativity."]}
                   />
                 </h2>

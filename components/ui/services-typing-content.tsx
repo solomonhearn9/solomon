@@ -214,7 +214,7 @@ export function ServicesTypingContent({ serviceItems }: ServicesTypingContentPro
       return undefined;
     }
 
-    const mediaQuery = window.matchMedia("(max-width: 640px)");
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
     setIsMobile(mediaQuery.matches);
 
     const handleChange = () => {
@@ -273,7 +273,7 @@ export function ServicesTypingContent({ serviceItems }: ServicesTypingContentPro
             }}
             transition={baseTransition}
           >
-            Expert in
+            {isMobile ? "Expert" : "Expert in"}
           </motion.span>
         </div>
         <ul
