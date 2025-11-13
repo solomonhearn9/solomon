@@ -180,7 +180,7 @@ a {
 
 .landing-hero__subtitle {
   margin: clamp(16px, 3vw, 38px) auto 0;
-  max-width: 520px;
+  max-width: 600px;
   font-size: 18px;
   letter-spacing: 0;
   line-height: 1.66;
