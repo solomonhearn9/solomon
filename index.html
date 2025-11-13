@@ -7,63 +7,51 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Hero Section -->
-    <section class="hero-section" id="home">
-        <div class="hero-decor hero-decor--left" aria-hidden="true"></div>
-        <div class="hero-decor hero-decor--right" aria-hidden="true"></div>
-
-        <div class="hero-surface">
-            <header class="hero-header">
-                <span class="hero-nameplate">SOLOMON HEARN</span>
-                <a class="hero-secondary-cta" href="#contact">Lets Create!</a>
-            </header>
-
-            <div class="hero-monogram" aria-hidden="true">
-                <span class="hero-initial hero-initial--s">S</span>
-                <span class="hero-monogram-divider" role="presentation"></span>
-                <span class="hero-initial hero-initial--h">H</span>
-            </div>
-
-            <h1 class="hero-title">
-                <span>Digital</span>
-                <span>Strategist</span>
-            </h1>
-
-            <p class="hero-tagline">
-                Boston-based tech consultant helping local businesses modernize their online presence.
-            </p>
-
-            <a class="hero-primary-cta" href="#contact">Lets Connect!</a>
+    <header class="site-header">
+        <div class="site-header__inner">
+            <span class="site-header__name">Solomon Hearn</span>
+            <a class="site-header__cta" href="#contact">Lets Create!</a>
         </div>
+    </header>
 
-        <div class="hero-brands-bar" aria-hidden="true">
+    <!-- Hero Section -->
+    <section class="landing-hero" id="home">
+        <div class="landing-hero__shell">
+            <div class="landing-hero__pattern landing-hero__pattern--left" aria-hidden="true">
+                <img src="side.webp" alt="" loading="lazy">
+            </div>
+            <div class="landing-hero__pattern landing-hero__pattern--right" aria-hidden="true">
+                <img src="side.webp" alt="" loading="lazy">
+            </div>
+            <div class="landing-hero__core">
+                <img src="sh.webp" alt="Solomon Hearn monogram logo" class="landing-hero__logo" loading="lazy">
+                <h1 class="landing-hero__title">
+                    <span>Digital</span>
+                    <span>Strategist</span>
+                </h1>
+                <p class="landing-hero__subtitle">Boston-based tech consultant helping local businesses <br> modernize their online presence.</p>
+            </div>
+        </div>
+        <div class="landing-hero__brands">
             <div class="logo-marquee">
                 <div class="logo-track">
                     <div class="logo-item">
-                        <img src="vandy.png" alt="Vanderbilt University" class="logo logo-vandy">
+                        <img src="walmart.webp" alt="Walmart" class="logo logo-walmart">
                     </div>
                     <div class="logo-item">
-                        <img src="walmart.png" alt="Walmart" class="logo logo-walmart">
-                    </div>
-                    <div class="logo-item">
-                        <img src="nsf.png" alt="National Science Foundation" class="logo logo-nsf">
+                        <img src="nsf.webp" alt="National Science Foundation" class="logo logo-nsf">
                     </div>
                     <div class="logo-item logo-text">terra—tory™</div>
                     <div class="logo-item logo-text">Sophia</div>
 
                     <div class="logo-item">
-                        <img src="vandy.png" alt="Vanderbilt University" class="logo logo-vandy">
+                        <img src="walmart.webp" alt="Walmart" class="logo logo-walmart">
                     </div>
                     <div class="logo-item">
-                        <img src="walmart.png" alt="Walmart" class="logo logo-walmart">
-                    </div>
-                    <div class="logo-item">
-                        <img src="nsf.png" alt="National Science Foundation" class="logo logo-nsf">
+                        <img src="nsf.webp" alt="National Science Foundation" class="logo logo-nsf">
                     </div>
                     <div class="logo-item logo-text">terra—tory™</div>
                     <div class="logo-item logo-text">Sophia</div>
@@ -85,7 +73,7 @@
                     </div>
                     <div class="services-expertise">
                         <div class="expert-label-wrapper">
-                            <span class="expert-label" aria-hidden="true">Expert</span>
+                            <span class="expert-label" aria-hidden="true">Expert in</span>
                         </div>
                         <ul class="services-list" aria-label="Areas of expertise">
                             <li class="service-item is-active">Web Design</li>
@@ -99,140 +87,72 @@
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section class="testimonials-section" id="testimonials">
-        <div class="testimonials-header">
-            <span class="section-eyebrow testimonials-eyebrow">Testimonials</span>
-            <h2 class="testimonials-title">Partners share their experience</h2>
-            <p class="testimonials-intro">A selection of founders, product leaders, and cultural partners on what it feels like to build together.</p>
-        </div>
-        <div class="testimonials-carousel">
-            <div class="testimonials-track">
-                <article class="testimonial-card">
-                    <div class="testimonial-stars" role="img" aria-label="5 out of 5 stars">
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                    </div>
-                    <p class="testimonial-quote">“Evermind helped us translate construction blueprints into adaptable digital templates. Strategy, design, and empathy showed up in every sprint.”</p>
-                    <div class="testimonial-author">
-                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200&h=200&fit=crop&crop=faces" alt="Esmeralda Finch" class="testimonial-avatar">
-                        <div class="testimonial-author-info">
-                            <span class="testimonial-name">Esmeralda Finch</span>
-                            <span class="testimonial-role">Operations Director, Evermind</span>
+    <!-- Recent Projects Section -->
+    <section class="projects-section" id="projects">
+        <div class="projects-container">
+            <header class="projects-header">
+                <span class="projects-icon" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" role="presentation" focusable="false">
+                        <path d="M32 6l9.3 10.4 14.3-3.2-3.2 14.3L62 37l-11.5 6.6 3.2 14.3-14.3-3.2L32 58l-7.4-11.3-14.3 3.2 3.2-14.3L2 37l11.5-9.5-3.2-14.3 14.3 3.2L32 6z" />
+                    </svg>
+                </span>
+                <div class="projects-header-copy">
+                    <h2 class="projects-title">Selected Works</h2>
+                </div>
+            </header>
+            <div class="projects-grid">
+                <article class="project-card">
+                    <div class="project-media project-media--sequence">
+                        <div class="project-sequence">
+                            <img class="project-sequence__image" src="sophia1.webp" alt="Sophia Wellness Collective homepage redesign hero section">
+                            <img class="project-sequence__image" src="sophia2.webp" alt="Sophia Wellness Collective product detail layout">
+                            <img class="project-sequence__image" src="sophia3.webp" alt="Sophia Wellness Collective storytelling landing page">
+                            <img class="project-sequence__image" src="sophia4.webp" alt="Sophia Wellness Collective mobile responsive views">
                         </div>
+                    </div>
+                    <div class="project-copy">
+                        <h3 class="project-title">Sophia Wellness Collective</h3>
+                        <ul class="project-tags" aria-label="Services provided">
+                            <li>Web Design</li>
+                            <li>Brand Strategy</li>
+                            <li>Automation</li>
+                            <li>Paid Media</li>
+                        </ul>
                     </div>
                 </article>
-                <article class="testimonial-card">
-                    <div class="testimonial-stars" role="img" aria-label="5 out of 5 stars">
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
+                <article class="project-card">
+                    <div class="project-media">
+                        <img src="sophia3.webp" alt="Preview of the Terra Tory product storytelling page">
                     </div>
-                    <p class="testimonial-quote">“They brought clarity to a complex launch, establishing a brand system our internal team can actually scale. Delivered ahead of schedule.”</p>
-                    <div class="testimonial-author">
-                        <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=200&h=200&fit=crop&crop=faces" alt="Noah Berg" class="testimonial-avatar">
-                        <div class="testimonial-author-info">
-                            <span class="testimonial-name">Noah Berg</span>
-                            <span class="testimonial-role">Co-Founder, Helio Labs</span>
-                        </div>
-                    </div>
-                </article>
-                <article class="testimonial-card">
-                    <div class="testimonial-stars" role="img" aria-label="5 out of 5 stars">
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                    </div>
-                    <p class="testimonial-quote">“Every deliverable felt handcrafted. They elevated our cultural program with visuals and systems that earned board-level praise.”</p>
-                    <div class="testimonial-author">
-                        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=200&h=200&fit=crop&crop=faces" alt="Maya Hernandez" class="testimonial-avatar">
-                        <div class="testimonial-author-info">
-                            <span class="testimonial-name">Maya Hernandez</span>
-                            <span class="testimonial-role">Creative Director, Terra—Tory</span>
-                        </div>
-                    </div>
-                </article>
-                <article class="testimonial-card testimonial-card--duplicate" aria-hidden="true" tabindex="-1">
-                    <div class="testimonial-stars" role="presentation">
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                    </div>
-                    <p class="testimonial-quote">“Evermind helped us translate construction blueprints into adaptable digital templates. Strategy, design, and empathy showed up in every sprint.”</p>
-                    <div class="testimonial-author" aria-hidden="true">
-                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200&h=200&fit=crop&crop=faces" alt="" class="testimonial-avatar">
-                        <div class="testimonial-author-info">
-                            <span class="testimonial-name">Esmeralda Finch</span>
-                            <span class="testimonial-role">Operations Director, Evermind</span>
-                        </div>
-                    </div>
-                </article>
-                <article class="testimonial-card testimonial-card--duplicate" aria-hidden="true" tabindex="-1">
-                    <div class="testimonial-stars" role="presentation">
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                    </div>
-                    <p class="testimonial-quote">“They brought clarity to a complex launch, establishing a brand system our internal team can actually scale. Delivered ahead of schedule.”</p>
-                    <div class="testimonial-author" aria-hidden="true">
-                        <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=200&h=200&fit=crop&crop=faces" alt="" class="testimonial-avatar">
-                        <div class="testimonial-author-info">
-                            <span class="testimonial-name">Noah Berg</span>
-                            <span class="testimonial-role">Co-Founder, Helio Labs</span>
-                        </div>
-                    </div>
-                </article>
-                <article class="testimonial-card testimonial-card--duplicate" aria-hidden="true" tabindex="-1">
-                    <div class="testimonial-stars" role="presentation">
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.47 5.21 5.75.47-4.33 3.75 1.34 5.57L10 13.93l-5.23 2.57 1.34-5.57-4.33-3.75 5.75-.47L10 1.5z" /></svg>
-                    </div>
-                    <p class="testimonial-quote">“Every deliverable felt handcrafted. They elevated our cultural program with visuals and systems that earned board-level praise.”</p>
-                    <div class="testimonial-author" aria-hidden="true">
-                        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=200&h=200&fit=crop&crop=faces" alt="" class="testimonial-avatar">
-                        <div class="testimonial-author-info">
-                            <span class="testimonial-name">Maya Hernandez</span>
-                            <span class="testimonial-role">Creative Director, Terra—Tory</span>
-                        </div>
+                    <div class="project-copy">
+                        <h3 class="project-title">Terra Tory</h3>
+                        <ul class="project-tags" aria-label="Services provided">
+                            <li>UI Systems</li>
+                            <li>Lifecycle Email</li>
+                            <li>Retail Enablement</li>
+                            <li>Analytics</li>
+                        </ul>
                     </div>
                 </article>
             </div>
         </div>
     </section>
 
-    <!-- Service Showcase Section -->
-    <section class="service-showcase" id="service-showcase">
-        <div class="service-showcase-content">
-            <div class="service-showcase-intro">
-                <h2 class="service-showcase-heading">
-                    <span class="service-heading-line">We help <span class="service-highlight-rethink">rethink</span></span>
-                    <span class="service-heading-line">Service <span class="service-highlight-design">Design</span></span>
-                </h2>
+    <footer class="site-footer" id="contact">
+        <div class="site-footer__inner">
+            <div class="site-footer__content">
+                <h2 class="site-footer__title">Looking for a partner in brand?</h2>
+                <p class="site-footer__subtitle">Whether it&rsquo;s a refresh or a rethink, I&rsquo;d love to talk.</p>
             </div>
-            <div class="service-showcase-visuals">
-                <figure class="service-showcase-frame primary-frame">
-                    <img src="sophia1.png" alt="Service design homepage concept" loading="lazy">
-                </figure>
-                <figure class="service-showcase-frame secondary-frame">
-                    <img src="sophia2.png" alt="About Sophia Lane detail" loading="lazy">
-                </figure>
+            <div class="site-footer__meta">
+                <span class="site-footer__copyright">2025&reg; Solomon Hearn</span>
+                <div class="site-footer__actions">
+                    <a class="site-footer__btn site-footer__btn--primary" href="mailto:hello@solomonhearn.com">Let&rsquo;s connect</a>
+                    <a class="site-footer__btn site-footer__btn--secondary" href="Solomon-Hearn-Resume.pdf" target="_blank" rel="noopener">Resume</a>
+                </div>
             </div>
         </div>
-    </section>
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-M2QHqfPyV7++e3Sk4olZnwnE5LiO6Z+r6k3d8zvx0zXmqbBdTT8/O1f9Xkwi42N6BwZXQnVbRGlTZGi99ee0ag==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" integrity="sha512-1u6pUq3RJFFThzZs+nwAcuN4m4IMcS5PSC72RPLcHEj5AhKJYPcX6mXDHl8YAYQyP2Ia9PHYzrg1Jo4azcRqyg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

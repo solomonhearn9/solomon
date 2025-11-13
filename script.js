@@ -1,98 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const navToggle = document.querySelector('.hero-overlay-icon');
-    const navOverlay = document.querySelector('.nav-overlay');
-    const navPanel = document.querySelector('.nav-panel');
-    const navLinks = document.querySelectorAll('.nav-panel-link');
-    let lastFocusedElement = null;
-
-    if (navToggle && navOverlay && navPanel) {
-        const navMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-        const setNavRevealOrigin = () => {
-            if (navMotionQuery.matches) {
-                return;
-            }
-
-            const toggleRect = navToggle.getBoundingClientRect();
-            const originX = toggleRect.left + toggleRect.width / 2;
-            const originY = toggleRect.top + toggleRect.height / 2;
-
-            navOverlay.style.setProperty('--nav-origin-x', `${originX}px`);
-            navOverlay.style.setProperty('--nav-origin-y', `${originY}px`);
-        };
-
-        const handleNavResize = () => {
-            if (navOverlay.classList.contains('is-open')) {
-                setNavRevealOrigin();
-            }
-        };
-
-        window.addEventListener('resize', handleNavResize);
-
-        const openNav = () => {
-            if (navOverlay.classList.contains('is-open')) {
-                return;
-            }
-
-            lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-            setNavRevealOrigin();
-
-            navOverlay.classList.add('is-open');
-            navToggle.classList.add('is-active');
-            document.body.classList.add('nav-open');
-            navOverlay.setAttribute('aria-hidden', 'false');
-            navToggle.setAttribute('aria-expanded', 'true');
-
-            requestAnimationFrame(() => {
-                navPanel.focus();
-            });
-        };
-
-        const closeNav = () => {
-            if (!navOverlay.classList.contains('is-open')) {
-                return;
-            }
-
-            navOverlay.classList.remove('is-open');
-            navToggle.classList.remove('is-active');
-            document.body.classList.remove('nav-open');
-            navOverlay.setAttribute('aria-hidden', 'true');
-            navToggle.setAttribute('aria-expanded', 'false');
-
-            if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
-                lastFocusedElement.focus();
-            } else {
-                navToggle.focus();
-            }
-        };
-
-        navToggle.addEventListener('click', () => {
-            if (navOverlay.classList.contains('is-open')) {
-                closeNav();
-            } else {
-                openNav();
-            }
-        });
-
-        navOverlay.addEventListener('click', (event) => {
-            if (!navPanel.contains(event.target)) {
-                closeNav();
-            }
-        });
-
-        navLinks.forEach((link) => {
-            link.addEventListener('click', () => {
-                closeNav();
-            });
-        });
-
-        window.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                closeNav();
-            }
-        });
-    }
-
     const cursorMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const pointerFineQuery = window.matchMedia('(pointer: fine)');
     const desktopWidthQuery = window.matchMedia('(min-width: 1024px)');
@@ -215,28 +121,236 @@ document.addEventListener('DOMContentLoaded', () => {
 
     evaluateCursorFollower();
 
-    const servicesSection = document.querySelector('.services-section');
-    if (!servicesSection) {
-        return;
-    }
-
-    const expertLabel = servicesSection.querySelector('.expert-label');
-    const serviceItems = Array.from(servicesSection.querySelectorAll('.services-list .service-item'));
-    if (!expertLabel || serviceItems.length === 0) {
-        return;
-    }
-
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const projectSequences = Array.from(document.querySelectorAll('.project-media--sequence'));
+    let projectSequenceCleanups = [];
+
+    const resetProjectSequences = () => {
+        projectSequenceCleanups.forEach((cleanup) => {
+            cleanup();
+        });
+        projectSequenceCleanups = [];
+    };
+
+    const fallbackProjectSequence = (images) => {
+        images.forEach((img, index) => {
+            img.style.opacity = index === 0 ? '1' : '0';
+            img.style.transform = index === 0 ? 'scale(1)' : 'scale(1.08)';
+        });
+
+        return () => {
+            images.forEach((img) => {
+                img.style.removeProperty('opacity');
+                img.style.removeProperty('transform');
+            });
+        };
+    };
+
+    const initProjectSequences = () => {
+        resetProjectSequences();
+
+        if (projectSequences.length === 0) {
+            return;
+        }
+
+        if (prefersReducedMotion.matches || !window.gsap) {
+            projectSequences.forEach((media) => {
+                const images = Array.from(media.querySelectorAll('.project-sequence__image'));
+                const cleanup = fallbackProjectSequence(images);
+                if (cleanup) {
+                    projectSequenceCleanups.push(cleanup);
+                }
+            });
+            return;
+        }
+
+        const { gsap } = window;
+
+        projectSequences.forEach((media) => {
+            const images = Array.from(media.querySelectorAll('.project-sequence__image'));
+            if (images.length <= 1) {
+                const cleanup = fallbackProjectSequence(images);
+                if (cleanup) {
+                    projectSequenceCleanups.push(cleanup);
+                }
+                return;
+            }
+
+            images.forEach((img, index) => {
+                gsap.set(img, {
+                    autoAlpha: index === 0 ? 1 : 0,
+                    scale: index === 0 ? 1 : 1.08
+                });
+            });
+
+            const indices = images.map((_, idx) => idx);
+            let currentIndex = 0;
+            let pendingOrder = gsap.utils.shuffle(indices.slice(1));
+            let pendingCall = null;
+            let activeTween = null;
+            let isPlaying = false;
+
+            const selectNextIndex = () => {
+                if (pendingOrder.length === 0) {
+                    pendingOrder = gsap.utils.shuffle(
+                        indices.filter((idx) => idx !== currentIndex)
+                    );
+                }
+
+                const nextIndex = pendingOrder.shift();
+
+                if (nextIndex === undefined || nextIndex === currentIndex) {
+                    return selectNextIndex();
+                }
+
+                return nextIndex;
+            };
+
+            const stopPlayback = () => {
+                isPlaying = false;
+                if (pendingCall) {
+                    pendingCall.kill();
+                    pendingCall = null;
+                }
+                if (activeTween) {
+                    activeTween.progress(1);
+                    activeTween.kill();
+                    activeTween = null;
+                }
+            };
+
+            const scheduleNext = () => {
+                if (!isPlaying) {
+                    return;
+                }
+
+                if (pendingCall) {
+                    pendingCall.kill();
+                }
+
+                pendingCall = gsap.delayedCall(3.2, () => {
+                    const nextIndex = selectNextIndex();
+                    const current = images[currentIndex];
+                    const next = images[nextIndex];
+
+                    if (activeTween) {
+                        activeTween.kill();
+                    }
+
+                    activeTween = gsap
+                        .timeline({ defaults: { ease: 'power2.inOut', duration: 1.35 } })
+                        .to(current, { autoAlpha: 0, scale: 1.18 }, 0)
+                        .fromTo(next, { autoAlpha: 0, scale: 1.02 }, { autoAlpha: 1, scale: 1 }, 0)
+                        .eventCallback('onComplete', () => {
+                            activeTween = null;
+                        });
+
+                    currentIndex = nextIndex;
+                    scheduleNext();
+                });
+            };
+
+            const startPlayback = () => {
+                if (isPlaying) {
+                    return;
+                }
+
+                isPlaying = true;
+                scheduleNext();
+            };
+
+            const container = media.closest('.project-card') || media;
+            let observer = null;
+
+            if ('IntersectionObserver' in window) {
+                observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                startPlayback();
+                            } else {
+                                stopPlayback();
+                            }
+                        });
+                    },
+                    { threshold: 0.4 }
+                );
+
+                observer.observe(container);
+
+                const rect = container.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    startPlayback();
+                }
+            } else {
+                startPlayback();
+            }
+
+            projectSequenceCleanups.push(() => {
+                stopPlayback();
+                if (activeTween) {
+                    activeTween.kill();
+                    activeTween = null;
+                }
+                if (pendingCall) {
+                    pendingCall.kill();
+                    pendingCall = null;
+                }
+                gsap.set(images, { clearProps: 'all' });
+                if (observer) {
+                    observer.disconnect();
+                }
+            });
+        });
+    };
+
+    initProjectSequences();
+
+    const servicesSection = document.querySelector('.services-section');
+    const expertLabel = servicesSection?.querySelector('.expert-label') || null;
+    const serviceItems = servicesSection
+        ? Array.from(servicesSection.querySelectorAll('.services-list .service-item'))
+        : [];
     let servicesTimeline = null;
     let resizeHandler = null;
     let itemOffsets = [];
+    let currentScrollDistance = 0;
+
+    const hasServiceAnimationPrereqs = () =>
+        Boolean(servicesSection && expertLabel && serviceItems.length > 0);
 
     const calculateOffsets = () => {
+        if (!hasServiceAnimationPrereqs()) {
+            itemOffsets = [];
+            return;
+        }
+
         const baseline = serviceItems[0].offsetTop;
-        itemOffsets = serviceItems.map((item) => item.offsetTop - baseline);
+        const labelHalf = expertLabel.offsetHeight / 2;
+
+        itemOffsets = serviceItems.map((item) => {
+            const itemOffset = item.offsetTop - baseline;
+            const itemCenterAdjustment = (item.offsetHeight / 2) - labelHalf;
+            return itemOffset + itemCenterAdjustment;
+        });
+    };
+
+    const computeScrollDistance = () => {
+        if (!hasServiceAnimationPrereqs()) {
+            return 0;
+        }
+
+        const finalOffset = itemOffsets[itemOffsets.length - 1] || 0;
+        const tailHeight = serviceItems[serviceItems.length - 1]?.offsetHeight || 0;
+        return Math.max(600, finalOffset + tailHeight + 120);
     };
 
     const applyLabelTransform = (offset) => {
+        if (!expertLabel) {
+            return;
+        }
+
         if (window.gsap) {
             window.gsap.set(expertLabel, { y: offset });
         } else {
@@ -265,13 +379,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const activateStaticState = (index = 0) => {
         teardownServicesAnimation();
+        if (!hasServiceAnimationPrereqs()) {
+            return;
+        }
+
         calculateOffsets();
+        currentScrollDistance = computeScrollDistance();
         applyLabelTransform(itemOffsets[index] || 0);
         setActiveService(index);
     };
 
     const initServicesAnimation = () => {
         teardownServicesAnimation();
+
+        if (!hasServiceAnimationPrereqs()) {
+            return;
+        }
 
         if (!window.gsap || !window.ScrollTrigger || prefersReducedMotion.matches) {
             activateStaticState();
@@ -284,6 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.registerPlugin(ScrollTrigger);
 
         calculateOffsets();
+        currentScrollDistance = computeScrollDistance();
         applyLabelTransform(itemOffsets[0] || 0);
         setActiveService(0);
 
@@ -294,7 +418,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const progressProxy = { value: 0 };
-        const scrollDistance = serviceItems.length * 100;
         const snapStep = 1 / transitions;
 
         servicesTimeline = gsap.to(progressProxy, {
@@ -304,7 +427,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 id: 'services-scroll',
                 trigger: servicesSection,
                 start: 'top top',
-                end: `+=${scrollDistance}%`,
+                end: () => `+=${currentScrollDistance}`,
                 scrub: true,
                 pin: servicesSection,
                 pinSpacing: true,
@@ -316,6 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 onRefresh: () => {
                     calculateOffsets();
+                    currentScrollDistance = computeScrollDistance();
                     const progressValue = (servicesTimeline?.scrollTrigger?.progress || 0) * transitions;
                     const activeIndex = Math.min(serviceItems.length - 1, Math.max(0, Math.round(progressValue)));
                     const targetOffset = itemOffsets[activeIndex] || 0;
@@ -345,6 +469,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             resizeFrame = requestAnimationFrame(() => {
                 calculateOffsets();
+                currentScrollDistance = computeScrollDistance();
                 const trigger = servicesTimeline?.scrollTrigger;
                 if (trigger) {
                     const currentProgress = trigger.progress * transitions;
@@ -368,6 +493,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initServicesAnimation();
 
     const onMotionPreferenceChange = () => {
+        initProjectSequences();
         initServicesAnimation();
     };
 
@@ -378,6 +504,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (!window.gsap || !window.ScrollTrigger) {
-        window.addEventListener('load', initServicesAnimation, { once: true });
+        window.addEventListener('load', () => {
+            initProjectSequences();
+            initServicesAnimation();
+        }, { once: true });
     }
 });
