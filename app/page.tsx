@@ -59,6 +59,7 @@ const marqueeItems: MarqueeItem[] = [
   { type: "image", src: "/walmart.webp", alt: "Walmart" },
   { type: "image", src: "/nsf.webp", alt: "National Science Foundation" },
   { type: "image", src: "/lane.webp", alt: "Lane Interior Design" },
+  { type: "image", src: "/vandy2.webp", alt: "Vanderbilt" },
 ];
 
 const serviceItems = ["Web Design", "SEO", "Branding", "Marketing"];
@@ -76,7 +77,7 @@ const projects: Project[] = [
 ];
 
 export default function HomePage() {
-  const marqueeLoop = [...marqueeItems, ...marqueeItems];
+  const marqueeLoop = [...marqueeItems, ...marqueeItems, ...marqueeItems, ...marqueeItems];
   const idBase = useId();
 
   const contactSectionRef = useRef<HTMLElement | null>(null);
@@ -240,9 +241,9 @@ export default function HomePage() {
     <>
       <header className="site-header">
         <div className="site-header__inner">
-          <a className="site-header__name" href="#home" aria-label="Return to top">
+          <span className="site-header__name">
             Solomon Hearn
-          </a>
+          </span>
           <SiteHeaderCta />
         </div>
       </header>
