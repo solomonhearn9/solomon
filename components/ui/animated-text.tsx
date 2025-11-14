@@ -9,6 +9,7 @@ interface AnimatedTextProps extends React.HTMLAttributes<HTMLDivElement> {
   text: string;
   duration?: number;
   delay?: number;
+  startDelay?: number;
   replay?: boolean;
   className?: string;
   textClassName?: string;
@@ -17,6 +18,7 @@ interface AnimatedTextProps extends React.HTMLAttributes<HTMLDivElement> {
   underlineGradient?: string;
   underlineHeight?: string;
   underlineOffset?: string;
+  onComplete?: () => void;
 }
 
 const AnimatedText = React.forwardRef<HTMLDivElement, AnimatedTextProps>(
@@ -25,6 +27,7 @@ const AnimatedText = React.forwardRef<HTMLDivElement, AnimatedTextProps>(
       text,
       duration = 0.5,
       delay = 0.1,
+      startDelay = 0,
       replay = true,
       className,
       textClassName,
@@ -33,11 +36,41 @@ const AnimatedText = React.forwardRef<HTMLDivElement, AnimatedTextProps>(
       underlineGradient = "from-blue-500 via-purple-500 to-pink-500",
       underlineHeight = "h-1",
       underlineOffset = "-bottom-2",
+      onComplete,
       ...props
     },
     ref
   ) => {
     const letters = React.useMemo(() => Array.from(text), [text]);
+    const words = React.useMemo(() => text.split(" "), [text]);
+    const shouldSplitLines = textClassName?.includes("landing-hero__title--animated");
+    
+    // Calculate when to fire onComplete - fire when last letter starts animating
+    // This ensures subtitle appears quickly after title animation
+    const completionDelay = React.useMemo(() => {
+      if (shouldSplitLines) {
+        // For split lines: stagger between words, then stagger between letters
+        const totalLetters = words.reduce((acc, word) => acc + word.length, 0);
+        // Fire when last letter starts: startDelay + (words-1) * delay + (totalLetters-1) * duration
+        // Add minimal buffer for visual completion (~0.1s)
+        const staggerTime = startDelay + (words.length - 1) * delay + (totalLetters - 1) * duration;
+        return staggerTime + 0.1;
+      }
+      // Fire when last letter starts + minimal buffer
+      const staggerTime = startDelay + (letters.length - 1) * duration;
+      return staggerTime + 0.1;
+    }, [words, letters, delay, duration, startDelay, shouldSplitLines]);
+    
+    // Call onComplete early - when last letter starts animating (not when it fully settles)
+    React.useEffect(() => {
+      if (onComplete && replay) {
+        const timer = setTimeout(() => {
+          onComplete();
+        }, completionDelay * 1000);
+        
+        return () => clearTimeout(timer);
+      }
+    }, [onComplete, replay, completionDelay]);
 
     const container: Variants = {
       hidden: {
@@ -47,7 +80,7 @@ const AnimatedText = React.forwardRef<HTMLDivElement, AnimatedTextProps>(
         opacity: 1,
         transition: {
           staggerChildren: duration,
-          delayChildren: i * delay
+          delayChildren: startDelay + (i * delay)
         }
       })
     };
@@ -104,9 +137,6 @@ const AnimatedText = React.forwardRef<HTMLDivElement, AnimatedTextProps>(
       return motionElements[as] ?? motion.span;
     }, [as]);
 
-    const words = React.useMemo(() => text.split(" "), [text]);
-    const shouldSplitLines = textClassName?.includes("landing-hero__title--animated");
-
     return (
       <div
         ref={ref}
@@ -162,4 +192,9 @@ const AnimatedText = React.forwardRef<HTMLDivElement, AnimatedTextProps>(
 AnimatedText.displayName = "AnimatedText";
 
 export { AnimatedText };
+
+
+
+
+
 

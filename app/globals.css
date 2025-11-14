@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Jura:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Inter:wght@100;200;300;400;500;600;700;800&family=Jura:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -166,6 +166,7 @@ a {
   transform: translateY(-50%);
   opacity: 0.9;
   pointer-events: none;
+  will-change: transform;
 }
 
 .landing-hero__pattern img {
@@ -226,6 +227,15 @@ a {
 
 .landing-hero__title--animated span {
   display: inline-block;
+}
+
+.landing-hero__title-wrapper {
+  transition: text-shadow 0.6s ease;
+}
+
+.landing-hero__title-wrapper--glow .landing-hero__title {
+  text-shadow: 0 0 20px rgba(255, 178, 107, 0.3);
+  transition: text-shadow 0.6s ease;
 }
 
 .landing-hero__subtitle {
@@ -342,10 +352,10 @@ a {
   content: "";
   position: absolute;
   inset: -200px 0 -48px 0;
-  background-image: url("/zig2-rotated-180.webp"), url("/zig2-rotated-180.webp");
+  background-image: url("/zig2.webp"), url("/zig2.webp"), url("/zig2.webp");
   background-repeat: no-repeat;
-  background-position: left center, right center;
-  background-size: 50% 160%;
+  background-position: left center, center center, right center;
+  background-size: 33.33% 160%, 33.33% 160%, 33.33% 160%;
   opacity: 0.72;
   filter: saturate(0.1) brightness(0.85) contrast(1.15);
   mix-blend-mode: screen;
@@ -409,7 +419,7 @@ a {
 
 .services-card.services-card--scroll {
   width: 100%;
-  padding: clamp(32px, 5vw, 48px) clamp(24px, 4vw, 40px) clamp(40px, 6vw, 56px);
+  padding: clamp(20px, 4vw, 36px) clamp(24px, 4vw, 40px) clamp(40px, 6vw, 56px);
   background: transparent;
   border: none;
   box-shadow: none;
@@ -460,11 +470,11 @@ a {
 
 .services-card--scroll .services-title {
   margin: 0;
-  font-family: "Playfair Display", "Times New Roman", serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: clamp(32px, 5vw, 56px);
-  font-weight: 400;
-  letter-spacing: -0.008em;
-  line-height: 1.2;
+  font-weight: 200;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
   color: #ffffff;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -510,9 +520,11 @@ a {
 
 .services-title {
   margin: 0;
-  font-family: "Playfair Display", "Times New Roman", serif;
+  font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
   font-size: 28px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
   color: var(--text-primary);
 }
 
@@ -698,16 +710,17 @@ a {
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: clamp(64px, 9vw, 108px);
+  gap: clamp(32px, 5vw, 48px);
 }
 
 .projects-header {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  text-align: left;
+  justify-content: center;
+  text-align: center;
   gap: clamp(28px, 4vw, 48px);
-  margin-bottom: clamp(32px, 5vw, 48px);
+  margin-bottom: 0;
+  width: 100%;
 }
 
 .projects-icon {
@@ -733,21 +746,24 @@ a {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  align-items: flex-start;
-  text-align: left;
-  margin-left: 20px;
+  align-items: center;
+  text-align: center;
+  margin-left: 0;
 }
 
 .projects-title {
-  margin: 0;
+  margin: 0 auto;
+  margin-left: 3ch;
+  margin-top: -2ch;
   font-family: "Playfair Display", "Times New Roman", serif;
-  font-size: clamp(28px, 3vw, 36px);
+  font-size: clamp(32px, 3.5vw, 42px);
   letter-spacing: 0.02em;
   color: var(--text-primary);
-  display: inline-flex;
+  display: flex;
   align-items: baseline;
   gap: 0.35em;
   white-space: nowrap;
+  justify-content: center;
 }
 
 @media (max-width: 768px) {
@@ -763,11 +779,12 @@ a {
 }
 
 .projects-dynamic-headline {
-  display: inline-flex;
+  display: flex;
   gap: 0.35em;
   align-items: baseline;
   text-transform: none;
   letter-spacing: 0.02em;
+  justify-content: center;
 }
 
 .projects-dynamic-prefix {
@@ -776,7 +793,6 @@ a {
 
 .projects-dynamic-prefix-desktop {
   display: inline;
-  transform: translateY(-25px);
 }
 
 .projects-dynamic-prefix-mobile {
@@ -874,6 +890,7 @@ a {
     min-height: 1.2em;
     padding-bottom: 0.5em;
     vertical-align: baseline;
+    transform: translateY(15px);
   }
 
   .projects-dynamic-word {
@@ -885,25 +902,32 @@ a {
     bottom: -0.5em;
     width: 100%;
     height: auto;
-    font-size: clamp(28px, 7vw, 36px);
+    font-family: "Playfair Display", "Times New Roman", serif;
+    font-size: clamp(32px, 8vw, 40px);
     line-height: 1.2;
-    font-weight: 500;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
     color: rgba(255, 255, 255, 0.95);
+    transform: translateY(10px);
   }
 }
 
 .projects-dynamic-wrapper {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   display: inline-flex;
   align-items: baseline;
   justify-content: flex-start;
   min-width: 14ch;
-  height: 1em;
+  height: auto;
+  min-height: 1em;
   padding-inline: 1em 0.35em;
+  padding-bottom: 20px;
   vertical-align: baseline;
   line-height: inherit;
-  margin-left: 0.5em;
+  margin-left: 0;
+  transform: translateY(15px);
 }
 
 .projects-dynamic-word {
@@ -915,13 +939,14 @@ a {
   display: inline-flex;
   align-items: flex-end;
   justify-content: flex-start;
-  font-family: "Anonymous Pro", "Courier New", monospace;
+  font-family: "Playfair Display", "Times New Roman", serif;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.02em;
   color: var(--text-primary);
   white-space: nowrap;
   line-height: inherit;
-  transform: translateY(0.12em);
+  font-size: inherit;
+  transform: translateY(0);
 }
 
 .projects-grid {
@@ -934,11 +959,12 @@ a {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: clamp(20px, 4vw, 32px);
+  gap: clamp(16px, 2.5vw, 24px);
   padding: 0;
   background: transparent;
   border: none;
   box-shadow: none;
+  align-items: center;
 }
 
 .project-card:nth-child(even) .project-media,
@@ -948,8 +974,10 @@ a {
 
 .project-media {
   width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
   aspect-ratio: 16 / 10;
-  min-height: 400px;
+  min-height: 300px;
   border-radius: clamp(16px, 3vw, 24px);
   background: rgba(200, 200, 200, 0.15);
   overflow: hidden;
@@ -1011,19 +1039,27 @@ a {
 
 .project-copy {
   display: flex;
-  flex-direction: column;
-  gap: clamp(12px, 2.5vw, 20px);
+  flex-direction: row;
+  gap: clamp(16px, 3vw, 24px);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  flex-wrap: wrap;
 }
 
 .project-title {
   margin: 0;
   margin-top: 0;
-  font-family: "Anonymous Pro", "Courier New", monospace;
-  font-size: clamp(24px, 4vw, 32px);
+  font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-size: clamp(20px, 3vw, 28px);
   letter-spacing: 0.05em;
-  text-transform: none;
-  font-weight: 400;
+  text-transform: uppercase;
+  font-weight: 500;
   color: #ffffff;
+  white-space: nowrap;
 }
 
 .project-tags {
@@ -1034,18 +1070,19 @@ a {
   margin-top: 0;
   padding: 0;
   list-style: none;
+  justify-content: center;
 }
 
 .project-tags li {
-  padding: clamp(10px, 2vw, 14px) clamp(16px, 3vw, 22px);
-  border-radius: 8px;
+  padding: clamp(6px, 1.2vw, 8px) clamp(12px, 2vw, 16px);
+  border-radius: 999px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   background: #ffffff;
-  font-size: clamp(12px, 1.5vw, 14px);
-  letter-spacing: 0.08em;
+  font-size: clamp(11px, 1.3vw, 13px);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #050505;
-  font-family: "Anonymous Pro", "Courier New", monospace;
+  font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -1706,8 +1743,8 @@ a {
   }
 
   .services-section::before {
-    background-size: 50% 160%, 50% 160%;
-    background-position: left center, right center;
+    background-size: 33.33% 160%, 33.33% 160%, 33.33% 160%;
+    background-position: left center, center center, right center;
     top: -200px;
     bottom: -48px;
     left: 50%;

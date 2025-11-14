@@ -298,6 +298,7 @@ const ExpertiseSpotlight = () => {
                   className={`block text-lg font-semibold tracking-tight transition-colors duration-200 md:text-2xl ${
                     activeIndex === index ? "text-white" : "text-white/40"
                   }`}
+                  style={{ fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', fontWeight: 700 }}
                 >
                   {highlight}
                 </span>

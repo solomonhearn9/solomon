@@ -1,6 +1,7 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useEffect, useId, useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 import { AnimatedText } from "@/components/ui/animated-text";
 import { AnimatedHeadline } from "@/components/ui/animated-headline";
@@ -89,6 +90,8 @@ export default function HomePage() {
   );
   const [formErrors, setFormErrors] = useState<Partial<Record<keyof ContactFormFields, string>>>({});
   const [isMobile, setIsMobile] = useState(false);
+  const [titleAnimationComplete, setTitleAnimationComplete] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   const fieldIds = {
     name: `${idBase}-footer-name`,
@@ -285,24 +288,52 @@ export default function HomePage() {
               />
             </div>
             <div className="landing-hero__core">
-              <Image
-                src="/sh.webp"
-                alt="Solomon Hearn monogram logo"
-                className="landing-hero__logo"
-                width={360}
-                height={360}
-                priority
-              />
-              <AnimatedText
-                text="Digital Strategist"
-                textClassName="landing-hero__title landing-hero__title--animated"
-                underlineClassName="hidden"
-                role="heading"
-                aria-level={1}
-              />
-              <p className="landing-hero__subtitle">
+              <motion.div
+                initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.95, filter: "blur(8px)" }}
+                animate={shouldReduceMotion ? {} : { opacity: 1, scale: 1, filter: "blur(0px)" }}
+                transition={{
+                  duration: 0.8,
+                  ease: [0.32, 0.16, 0.24, 1],
+                  delay: 0
+                }}
+                style={{ willChange: "opacity, transform, filter" }}
+              >
+                <Image
+                  src="/sh.webp"
+                  alt="Solomon Hearn monogram logo"
+                  className="landing-hero__logo"
+                  width={360}
+                  height={360}
+                  priority
+                />
+              </motion.div>
+              <div className={titleAnimationComplete ? "landing-hero__title-wrapper landing-hero__title-wrapper--glow" : "landing-hero__title-wrapper"}>
+                <AnimatedText
+                  text="Digital Strategist"
+                  textClassName="landing-hero__title landing-hero__title--animated"
+                  underlineClassName="hidden"
+                  role="heading"
+                  aria-level={1}
+                  duration={0.15}
+                  delay={0.03}
+                  startDelay={0.5}
+                  onComplete={() => setTitleAnimationComplete(true)}
+                />
+              </div>
+              <motion.p 
+                className="landing-hero__subtitle"
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+                animate={shouldReduceMotion ? {} : titleAnimationComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{
+                  duration: 0.5,
+                  ease: [0.32, 0.16, 0.24, 1],
+                  delay: 0
+                }}
+                key={titleAnimationComplete ? "complete" : "waiting"}
+                style={{ willChange: "opacity, transform" }}
+              >
                 <span style={{ whiteSpace: 'nowrap' }}>Boston-based tech consultant helping local businesses</span> <br/> modernize their online presence.
-              </p>
+              </motion.p>
             </div>
           </div>
           <div className="landing-hero__brands">

@@ -245,12 +245,6 @@ export function ServicesTypingContent({ serviceItems }: ServicesTypingContentPro
         >
           Every Detail, Perfectly Designed to Last.
         </h2>
-        <p 
-          className={`services-tagline services-fade${visibleStage >= 3 ? " services-fade--visible" : ""}`}
-          style={{ opacity: visibleStage >= 3 ? 1 : 0 }}
-        >
-          Strategic brand and digital experiences built to scale across culture, commerce, and technology.
-        </p>
       </div>
       <div
         className={`services-expertise services-expertise--scroll services-fade${
