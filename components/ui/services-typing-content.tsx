@@ -267,7 +267,7 @@ export function ServicesTypingContent({ serviceItems }: ServicesTypingContentPro
             }}
             transition={baseTransition}
           >
-            {isMobile ? "Expert" : "Expert in"}
+            Offering
           </motion.span>
         </div>
         <ul

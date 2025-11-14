@@ -63,7 +63,7 @@ const marqueeItems: MarqueeItem[] = [
   { type: "image", src: "/lane.webp", alt: "Lane Interior Design" },
 ];
 
-const serviceItems = ["Web Design", "SEO", "Branding", "Marketing"];
+const serviceItems = ["Digital Strategy", "SEO", "Brand Identity", "Marketing"];
 
 const projects: Project[] = [
   {
@@ -128,11 +128,20 @@ export default function HomePage() {
         });
       },
       {
-        threshold: 0.28
+        threshold: 0.1,
+        rootMargin: '100px'
       }
     );
 
     observer.observe(footer);
+
+    // Fallback: if footer is already in view on mount, show it immediately
+    const rect = footer.getBoundingClientRect();
+    const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+    if (isInView) {
+      setIsContactVisible(true);
+      observer.disconnect();
+    }
 
     return () => {
       observer.disconnect();
@@ -440,9 +449,9 @@ export default function HomePage() {
               <div className="projects-header-copy">
                 <h2 className="projects-title">
                   <AnimatedHeadline
-                    prefix="Elevate your brand with "
-                    prefixMobile="Elevate your brand"
-                    words={["design.", "analytics.", "storytelling.", "creativity."]}
+                    prefix="Elevate your value with "
+                    prefixMobile="Elevate your value"
+                    words={["innovation.", "analytics.", "results.", "insights."]}
                   />
                 </h2>
               </div>

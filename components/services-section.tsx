@@ -116,7 +116,7 @@ const ServicesContent = () => {
   );
 };
 
-const expertiseHighlights = ["Digital Strategy", "SEO", "Brand Identity", "Performance Marketing"];
+const expertiseHighlights = ["Digital Strategy", "SEO", "Brand Identity", "Marketing"];
 
 const easeInOutCubic = (t: number) =>
   t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;

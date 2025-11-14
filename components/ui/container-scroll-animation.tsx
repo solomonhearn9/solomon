@@ -136,7 +136,7 @@ export const Card = ({
           boxShadow:
             "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003"
         }}
-        className="mx-auto -mt-12 w-full max-w-5xl rounded-[46px] border border-white/12 bg-[#070709] p-[1.5px] shadow-[0_40px_120px_rgba(0,0,0,0.6)] md:p-[1.5px]"
+        className="mx-auto -mt-12 w-full max-w-5xl rounded-[46px] border border-[#050505] bg-[#070709] p-[1.5px] shadow-[0_40px_120px_rgba(0,0,0,0.6)] md:p-[1.5px]"
       >
         <motion.div
           style={{
