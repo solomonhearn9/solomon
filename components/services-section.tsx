@@ -89,7 +89,6 @@ const ServicesContent = () => {
                   sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                   priority={service.title === "Advisory Sessions"}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
               </div>
               <div className="flex flex-1 flex-col gap-6 p-8">
                 <div className="flex items-center gap-3 text-primary">
@@ -134,6 +133,7 @@ const ExpertiseSpotlight = () => {
   const listWrapperRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const labelRef = useRef<HTMLSpanElement>(null);
+  const computePositionsRef = useRef<(() => void) | null>(null);
 
   const [labelOffset, setLabelOffset] = useState(28);
   const [itemPositions, setItemPositions] = useState<number[]>([]);
@@ -163,11 +163,12 @@ const ExpertiseSpotlight = () => {
         return;
       }
 
-      const offsets = items.map((item) => item.getBoundingClientRect().top - wrapperRect.top);
+      const offsets = items.map((item) => item.getBoundingClientRect().bottom - wrapperRect.top);
       setItemPositions(offsets);
       setActiveIndex(0);
     };
 
+    computePositionsRef.current = computePositions;
     computePositions();
 
     if (typeof window !== "undefined") {
@@ -192,9 +193,22 @@ const ExpertiseSpotlight = () => {
     };
   }, []);
 
+  // Recalculate positions when mobile state changes to account for different padding
+  useLayoutEffect(() => {
+    if (computePositionsRef.current) {
+      // Use a small delay to ensure styles have been applied
+      const timeoutId = setTimeout(() => {
+        computePositionsRef.current?.();
+      }, 0);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [isMobile]);
+
   const { progressStops, targetOffsets, indexStops, easeStops } = useMemo(() => {
     if (itemPositions.length <= 1) {
-      const singleOffset = (itemPositions[0] ?? 0) - labelOffset;
+      // Use larger offset for single item case (likely Digital Strategy)
+      const borderOffset = 8; // pixels to lower the label for better alignment
+      const singleOffset = (itemPositions[0] ?? 0) - labelOffset + borderOffset;
       return {
         progressStops: [animationStart, animationEnd],
         targetOffsets: [singleOffset, singleOffset],
@@ -209,7 +223,15 @@ const ExpertiseSpotlight = () => {
     const stops = itemPositions.map(
       (_, index) => animationStart + (range * index) / steps
     );
-    const offsets = itemPositions.map((position) => position - labelOffset);
+    // Add offset to better align with the bottom border line
+    // Larger offset for "Digital Strategy" (index 0) and "Brand Identity" (index 2)
+    const getBorderOffset = (index: number) => {
+      if (index === 0 || index === 2) {
+        return 8; // Lower offset for Digital Strategy and Brand Identity
+      }
+      return 2; // Smaller offset for other items
+    };
+    const offsets = itemPositions.map((position, index) => position - labelOffset + getBorderOffset(index));
     const indexes = itemPositions.map((_, index) => index);
     const easeArray = new Array(stops.length - 1).fill(easeInOutCubic);
 

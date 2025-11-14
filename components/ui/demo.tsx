@@ -1,34 +1,15 @@
 "use client";
 
-import { Hero } from "@/components/ui/animated-hero";
-import { ShimmerButton } from "@/components/ui/shimmer-button";
+import { LiquidButton } from "@/components/ui/liquid-glass-button";
 
-function HeroDemo() {
+export default function DemoOne() {
   return (
-    <div className="block">
-      <Hero />
-    </div>
+    <>
+      <div className="relative h-[200px] w-[800px]">
+        <LiquidButton className="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2">
+          Liquid Glass
+        </LiquidButton>
+      </div>
+    </>
   );
 }
-
-function ShimmerButtonDemo() {
-  return (
-    <div className="z-10 flex min-h-64 items-center justify-center">
-      <ShimmerButton className="shadow-2xl">
-        <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
-          Shimmer Button
-        </span>
-      </ShimmerButton>
-    </div>
-  );
-}
-
-export default function ModifiedClassicLoader() {
-  return (
-    <div className="border-primary ml-3 h-10 w-10 animate-spin rounded-full border-t-2 border-b-2 ease-linear"></div>
-  );
-}
-
-export { HeroDemo, ShimmerButtonDemo };
-
-

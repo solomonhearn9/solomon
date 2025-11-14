@@ -1098,11 +1098,173 @@ a {
 
 .site-footer {
   position: relative;
-  background: #0c0c0f;
-  padding: clamp(120px, 20vw, 220px) clamp(20px, 8vw, 120px) clamp(48px, 12vw, 90px);
+  background: 
+    radial-gradient(ellipse at 15% 25%, rgba(255, 178, 107, 0.08) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 75%, rgba(112, 134, 255, 0.1) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 50%, rgba(88, 110, 255, 0.06) 0%, transparent 55%),
+    linear-gradient(135deg, #0a0a0d 0%, #0c0c0f 25%, #0a0a0d 50%, #0c0c0f 75%, #0a0a0d 100%);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 200% 200%;
+  background-position: 0% 0%, 100% 100%, 50% 50%, 0% 0%;
+  padding: clamp(120px, 20vw, 220px) clamp(20px, 8vw, 120px) clamp(20px, 3vw, 24px);
   color: var(--text-primary);
   overflow: hidden;
   min-height: 400px;
+  /* Ensure footer is visible by default - animation will enhance it */
+  opacity: 1;
+  animation: footerBackgroundShift 20s ease-in-out infinite;
+}
+
+.site-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(255, 178, 107, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(112, 134, 255, 0.14) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(88, 110, 255, 0.08) 0%, transparent 55%);
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 0;
+  animation: footerGradientShift 10s ease-in-out infinite alternate;
+}
+
+.site-footer::after {
+  content: "";
+  position: absolute;
+  inset: -200px 0 -48px 0;
+  background-image: url("/zig2-rotated.webp");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 80% 180%;
+  opacity: 0.18;
+  filter: saturate(0.15) brightness(0.55) contrast(1.25);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 0;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.25) 8%, rgba(0, 0, 0, 0.5) 18%, #000 28%, #000 72%, rgba(0, 0, 0, 0.5) 82%, rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.25) 8%, rgba(0, 0, 0, 0.5) 18%, #000 28%, #000 72%, rgba(0, 0, 0, 0.5) 82%, rgba(0, 0, 0, 0) 100%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: footerPatternFloat 14s ease-in-out infinite;
+}
+
+@keyframes footerBackgroundShift {
+  0%, 100% {
+    background-position: 0% 0%, 100% 100%, 50% 50%, 0% 0%;
+  }
+  50% {
+    background-position: 2% 2%, 98% 98%, 48% 52%, 1% 1%;
+  }
+}
+
+@keyframes footerGradientShift {
+  0% {
+    opacity: 0.75;
+    transform: scale(1) translate(0, 0);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.03) translate(1%, -1%);
+  }
+  100% {
+    opacity: 0.85;
+    transform: scale(1.01) translate(-0.5%, 0.5%);
+  }
+}
+
+@keyframes footerPatternFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translateY(-15px) scale(1.015) rotate(0.5deg);
+    opacity: 0.22;
+  }
+}
+
+@media (min-width: 769px) {
+  .site-footer::after {
+    background-size: 100% 100%;
+    background-position: center center;
+    inset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-footer {
+    animation: none;
+  }
+  
+  .site-footer::before,
+  .site-footer::after {
+    animation: none;
+    opacity: 0.4;
+  }
+}
+
+.site-footer__arrival {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.site-footer__arrival-halo,
+.site-footer__arrival-beam {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.9s cubic-bezier(0.32, 0.16, 0.24, 1),
+    transform 0.9s cubic-bezier(0.32, 0.16, 0.24, 1);
+  will-change: transform, opacity;
+}
+
+.site-footer__arrival-halo {
+  background: radial-gradient(circle at 50% 80%, rgba(255, 178, 107, 0.3), rgba(12, 12, 15, 0.2) 36%, transparent 70%);
+  filter: blur(18px);
+  transform: translateY(22%) scale(0.88);
+  opacity: 0;
+}
+
+.site-footer__arrival-beam {
+  background: linear-gradient(180deg, rgba(112, 134, 255, 0.18) 0%, rgba(12, 12, 15, 0) 55%);
+  filter: blur(28px);
+  transform: translateY(30%);
+  opacity: 0;
+}
+
+.site-footer__arrival.is-active .site-footer__arrival-halo {
+  transform: translateY(0) scale(1);
+  opacity: 0.7;
+}
+
+.site-footer__arrival.is-active .site-footer__arrival-beam {
+  transform: translateY(-12%);
+  opacity: 0.4;
+}
+
+.site-footer__arrival--static .site-footer__arrival-halo,
+.site-footer__arrival--static .site-footer__arrival-beam {
+  transition: none;
+  transform: none;
+  opacity: 0.25;
+}
+
+.site-footer__arrival--static .site-footer__arrival-beam {
+  opacity: 0.18;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-footer__arrival-halo,
+  .site-footer__arrival-beam {
+    transition: none;
+    transform: none;
+    opacity: 0.24;
+  }
 }
 
 /* Smooth fade-in animation for footer content */
@@ -1146,7 +1308,7 @@ a {
 
 .site-footer__inner {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
@@ -1165,7 +1327,7 @@ a {
   font-family: "Playfair Display", "Times New Roman", serif;
   font-size: clamp(48px, 8vw, 96px);
   font-weight: 400;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.02em;
   line-height: 1;
 }
 
@@ -1185,7 +1347,7 @@ a {
   gap: clamp(18px, 4vw, 42px);
   margin-top: auto;
   padding-top: clamp(0px, 4vw, 24px);
-  padding-bottom: clamp(0px, 2vw, 12px);
+  padding-bottom: 0;
 }
 
 .site-footer__copyright {
@@ -1722,23 +1884,14 @@ a {
 
   .landing-hero__cta-button {
     margin-top: clamp(16px, 3vw, 24px);
-    padding: clamp(8px, 1.5vw, 12px) clamp(18px, 4vw, 24px);
-    font-size: clamp(11px, 2.5vw, 13px);
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #fff;
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
+    display: flex;
+    justify-content: center;
   }
 
-  .landing-hero__cta-button:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.5);
+  .landing-hero__cta-button-inner {
+    font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
   }
 
   .landing-hero__brands {
@@ -2397,11 +2550,17 @@ a {
 /* Enhanced Mobile Footer Styling */
 @media (max-width: 768px) {
   .site-footer {
-    padding: clamp(84px, 22vw, 140px) clamp(20px, 7vw, 40px) clamp(48px, 16vw, 88px);
+    padding: clamp(84px, 22vw, 140px) clamp(20px, 7vw, 40px) clamp(20px, 3vw, 24px);
     min-height: auto;
     display: flex;
     flex-direction: column;
     overflow: visible;
+  }
+
+  .site-footer::after {
+    background-size: 100% 160%;
+    background-position: center center;
+    opacity: 0.2;
   }
 
   .site-footer__inner {
@@ -2419,11 +2578,11 @@ a {
   }
 
   .site-footer__title {
-    font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
+    font-family: "Playfair Display", "Times New Roman", serif;
     font-size: clamp(42px, 11vw, 64px);
-    font-weight: 700;
+    font-weight: 400;
     line-height: 1.1;
-    letter-spacing: -0.02em;
+    letter-spacing: 0.02em;
     margin: 0;
     color: #ffffff;
   }
@@ -2730,7 +2889,7 @@ a {
   }
 
   .site-footer {
-    padding: clamp(100px, 26vw, 160px) clamp(18px, 5vw, 32px) clamp(50px, 12vw, 80px);
+    padding: clamp(100px, 26vw, 160px) clamp(18px, 5vw, 32px) clamp(20px, 3vw, 24px);
   }
 
   .site-footer__inner {

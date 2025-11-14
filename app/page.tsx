@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 
 import { AnimatedText } from "@/components/ui/animated-text";
 import { AnimatedHeadline } from "@/components/ui/animated-headline";
+import { LiquidButton } from "@/components/ui/liquid-glass-button";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { ServicesTypingContent } from "@/components/ui/services-typing-content";
 import { SiteHeaderCta } from "@/components/site-header-cta";
@@ -59,8 +60,7 @@ const createInitialTouchedState = (): Record<keyof ContactFormFields, boolean> =
 
 const marqueeItems: MarqueeItem[] = [
   { type: "image", src: "/walmart.webp", alt: "Walmart" },
-  { type: "image", src: "/nsf.webp", alt: "National Science Foundation" },
-  { type: "image", src: "/lane.webp", alt: "Lane Interior Design" },
+  { type: "image", src: "/nsf.webp", alt: "National Science Foundation" }
 ];
 
 const serviceItems = ["Digital Strategy", "SEO", "Brand Identity", "Marketing"];
@@ -112,9 +112,33 @@ export default function HomePage() {
   const collapsiblePanelId = `${idBase}-footer-panel`;
   const successMessageId = `${idBase}-footer-success`;
 
+  const contactMotionProps = shouldReduceMotion
+    ? {}
+    : {
+        initial: { opacity: 1, y: 60, scale: 0.98 },
+        whileInView: {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          transition: {
+            type: "spring",
+            stiffness: 120,
+            damping: 26,
+            mass: 0.9,
+            delay: 0.05
+          }
+        },
+        viewport: { once: true, margin: "100px" }
+      };
+
   useEffect(() => {
     const footer = contactSectionRef.current;
-    if (!footer || isContactVisible) {
+    if (!footer) {
+      return;
+    }
+
+    // If already visible, don't set up observer
+    if (isContactVisible) {
       return;
     }
 
@@ -136,15 +160,31 @@ export default function HomePage() {
     observer.observe(footer);
 
     // Fallback: if footer is already in view on mount, show it immediately
-    const rect = footer.getBoundingClientRect();
-    const isInView = rect.top < window.innerHeight && rect.bottom > 0;
-    if (isInView) {
-      setIsContactVisible(true);
-      observer.disconnect();
-    }
+    const checkVisibility = () => {
+      const rect = footer.getBoundingClientRect();
+      const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+      if (isInView) {
+        setIsContactVisible(true);
+        observer.disconnect();
+      }
+    };
+
+    // Check immediately and after a short delay
+    checkVisibility();
+    const timeoutId = setTimeout(checkVisibility, 100);
+
+    // Fallback timeout to ensure footer becomes visible
+    const fallbackTimeout = setTimeout(() => {
+      if (!isContactVisible) {
+        setIsContactVisible(true);
+        observer.disconnect();
+      }
+    }, 2000);
 
     return () => {
       observer.disconnect();
+      clearTimeout(timeoutId);
+      clearTimeout(fallbackTimeout);
     };
   }, [isContactVisible]);
 
@@ -388,12 +428,8 @@ export default function HomePage() {
                 )}
               </motion.p>
               {isMobile && (
-                <motion.button
+                <motion.div
                   className="landing-hero__cta-button"
-                  onClick={() => {
-                    const contactSection = document.getElementById("contact");
-                    contactSection?.scrollIntoView({ behavior: "smooth", block: "start" });
-                  }}
                   initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
                   animate={shouldReduceMotion ? {} : titleAnimationComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{
@@ -403,8 +439,17 @@ export default function HomePage() {
                   }}
                   style={{ willChange: "opacity, transform" }}
                 >
-                  Lets Connect
-                </motion.button>
+                  <LiquidButton
+                    size="xl"
+                    className="landing-hero__cta-button-inner uppercase tracking-[0.2em] font-semibold text-sm"
+                    onClick={() => {
+                      const contactSection = document.getElementById("contact");
+                      contactSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }}
+                  >
+                    Lets Connect
+                  </LiquidButton>
+                </motion.div>
               )}
             </div>
           </div>
@@ -526,14 +571,24 @@ export default function HomePage() {
         </section>
       </main>
 
-      <footer
+      <motion.footer
+        {...(contactMotionProps ?? {})}
         className={`site-footer${isContactVisible ? " is-revealed" : ""}`}
         id="contact"
         ref={contactSectionRef}
       >
+        <div
+          className={`site-footer__arrival${isContactVisible ? " is-active" : ""}${
+            shouldReduceMotion ? " site-footer__arrival--static" : ""
+          }`}
+          aria-hidden="true"
+        >
+          <div className="site-footer__arrival-halo" />
+          <div className="site-footer__arrival-beam" />
+        </div>
         <div className="site-footer__inner">
           <div className="site-footer__content">
-            <h2 className="site-footer__title">Looking for a partner in brand?</h2>
+            <h2 className="site-footer__title">Looking for a partner?</h2>
             <p className="site-footer__subtitle">
               Whether it&apos;s a refresh or a rethink, I&apos;d love to talk.
             </p>
@@ -713,7 +768,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </footer>
+      </motion.footer>
     </>
   );
 }
