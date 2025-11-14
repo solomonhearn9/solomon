@@ -2397,36 +2397,45 @@ a {
 /* Enhanced Mobile Footer Styling */
 @media (max-width: 768px) {
   .site-footer {
-    padding: clamp(120px, 28vw, 180px) clamp(18px, 6vw, 48px) clamp(60px, 14vw, 100px);
-    min-height: clamp(70vh, 85vh, 90vh);
+    padding: clamp(84px, 22vw, 140px) clamp(20px, 7vw, 40px) clamp(48px, 16vw, 88px);
+    min-height: auto;
     display: flex;
     flex-direction: column;
+    overflow: visible;
   }
 
   .site-footer__inner {
-    min-height: clamp(60vh, 75vh, 80vh);
-    gap: clamp(64px, 12vw, 96px);
+    min-height: auto;
+    gap: clamp(48px, 11vw, 72px);
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
   }
 
   .site-footer__content {
-    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 4.5vw, 28px);
   }
 
   .site-footer__title {
-    font-size: clamp(42px, 12vw, 72px);
+    font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
+    font-size: clamp(42px, 11vw, 64px);
+    font-weight: 700;
     line-height: 1.1;
-    margin-bottom: clamp(28px, 5vw, 40px);
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: #ffffff;
   }
 
   .site-footer__subtitle {
-    margin-top: clamp(32px, 5vw, 48px);
-    font-size: clamp(17px, 2.2vw, 20px);
-    line-height: 1.6;
-    max-width: 100%;
+    margin: 0;
+    font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
+    font-size: clamp(17px, 3.5vw, 20px);
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgba(245, 245, 249, 0.85);
+    max-width: min(460px, 100%);
   }
 
   .site-footer__meta {
@@ -2434,15 +2443,21 @@ a {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    gap: clamp(32px, 8vw, 56px);
-    padding-top: clamp(32px, 8vw, 64px);
+    align-items: stretch;
+    gap: clamp(32px, 8vw, 48px);
+    padding-top: clamp(32px, 8vw, 48px);
     margin-top: auto;
   }
 
   .site-footer__actions {
     width: 100%;
-    align-items: stretch;
-    gap: clamp(20px, 4vw, 32px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: clamp(12px, 2.5vw, 18px);
+    flex-wrap: wrap;
+    position: relative;
   }
 
   .site-footer__response-note {
@@ -2450,20 +2465,28 @@ a {
   }
 
   .site-footer__button-group {
-    flex-direction: column;
-    align-items: stretch;
-    gap: clamp(16px, 3vw, 24px);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: clamp(12px, 2.5vw, 18px);
+    flex-wrap: wrap;
     width: 100%;
   }
 
   .site-footer__btn {
-    width: 100%;
-    padding: clamp(16px, 2.4vw, 18px) clamp(28px, 5vw, 40px);
-    font-size: clamp(14px, 1.8vw, 16px);
-    min-height: 52px;
-    display: flex;
+    flex: 0 1 auto;
+    padding: clamp(16px, 2.6vw, 20px) clamp(30px, 5vw, 44px);
+    font-size: clamp(15px, 2.5vw, 18px);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    height: 56px;
+    min-height: 56px;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    white-space: nowrap;
+    box-sizing: border-box;
   }
 
   .site-footer__btn--secondary {
@@ -2472,30 +2495,79 @@ a {
 
   .site-footer__copyright {
     order: 2;
-    margin-top: clamp(24px, 6vw, 40px);
-    padding-top: clamp(20px, 5vw, 32px);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    text-align: center;
+    margin-top: clamp(28px, 7vw, 40px);
+    padding-top: 0;
+    border-top: none;
+    text-align: left;
     width: 100%;
+    font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
+    font-size: clamp(13px, 2vw, 14px);
+    font-weight: 400;
+    color: rgba(245, 245, 249, 0.6);
+    letter-spacing: 0.02em;
   }
 
   .site-footer__collapsible {
     width: 100%;
-    margin-top: clamp(12px, 3vw, 20px);
-    transition: border-color 0.3s ease, background 0.3s ease, transform 0.2s ease;
+    margin: 0;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(12, 12, 15, 0.52);
+    backdrop-filter: blur(18px);
+    overflow: visible;
+    transition: border-color 0.3s ease, background 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 56px;
+    box-sizing: border-box;
   }
 
-  .site-footer__collapsible:active {
-    transform: scale(0.98);
+  .site-footer__collapsible:hover {
+    border-color: rgba(255, 255, 255, 0.16);
   }
 
-  .site-footer__form-submit,
-  .site-footer__form-reset {
-    align-self: flex-start;
+  .site-footer__collapsible:focus-within {
+    border-color: rgba(255, 255, 255, 0.24);
+    background: rgba(12, 12, 15, 0.7);
+  }
+
+  .site-footer__collapsible-panel {
+    position: relative;
+    width: 100%;
+    margin-top: clamp(12px, 2.5vw, 16px);
+    margin-bottom: clamp(12px, 2.5vw, 16px);
+    background: rgba(10, 10, 14, 0.95);
+    border-radius: 24px;
+    padding: clamp(20px, 5vw, 32px) clamp(16px, 5vw, 24px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    z-index: 10;
   }
 
   .site-footer__collapsible-panel.is-open {
     max-height: 720px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .site-footer__collapsible .site-footer__collapsible-panel.is-open ~ *,
+  .site-footer__collapsible:has(.site-footer__collapsible-panel.is-open) {
+    height: auto;
+  }
+
+  .site-footer__collapsible-content {
+    padding: 0;
+    gap: clamp(16px, 4vw, 24px);
+  }
+
+  .site-footer__form {
+    gap: clamp(16px, 3.5vw, 24px);
+  }
+
+  .site-footer__form-submit,
+  .site-footer__form-reset {
+    align-self: stretch;
   }
 
   /* Enhanced form field styling for mobile */
@@ -2538,14 +2610,76 @@ a {
   }
 
   .site-footer__collapsible-toggle {
-    min-height: 48px;
-    padding: clamp(16px, 2.5vw, 18px) clamp(18px, 4vw, 26px);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(12px, 3vw, 18px);
+    padding: 0 clamp(18px, 4vw, 26px);
+    border: none;
+    background: transparent;
+    color: rgba(245, 245, 249, 0.68);
+    font-size: clamp(13px, 1.8vw, 15px);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    height: 100%;
+    min-height: 56px;
+    box-sizing: border-box;
+    line-height: 1.2;
   }
 
-  /* Improved collapsible panel styling */
-  .site-footer__collapsible-content {
-    padding: 0 clamp(18px, 4vw, 26px) clamp(24px, 5vw, 32px);
-    gap: clamp(20px, 4vw, 28px);
+  .site-footer__collapsible-toggle:hover {
+    color: var(--text-primary);
+  }
+
+  .site-footer__collapsible-toggle:focus-visible {
+    outline: 2px solid rgba(255, 178, 107, 0.55);
+    outline-offset: 4px;
+    color: var(--text-primary);
+  }
+
+  .site-footer__collapsible-icon {
+    position: relative;
+    width: clamp(30px, 4vw, 34px);
+    height: clamp(30px, 4vw, 34px);
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .site-footer__collapsible-icon::before,
+  .site-footer__collapsible-icon::after {
+    content: "";
+    position: absolute;
+    background: currentColor;
+    border-radius: 999px;
+    transition: opacity 0.3s ease;
+  }
+
+  .site-footer__collapsible-icon::before {
+    width: clamp(12px, 2vw, 14px);
+    height: 2px;
+  }
+
+  .site-footer__collapsible-icon::after {
+    width: 2px;
+    height: clamp(12px, 2vw, 14px);
+  }
+
+  .site-footer__collapsible-toggle[aria-expanded="true"] .site-footer__collapsible-icon {
+    transform: rotate(180deg);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.28);
+  }
+
+  .site-footer__collapsible-toggle[aria-expanded="true"] .site-footer__collapsible-icon::after {
+    opacity: 0;
   }
 }
 
@@ -2612,8 +2746,8 @@ a {
   }
 
   .site-footer__collapsible-toggle {
-    padding: 16px 18px;
-    font-size: 12px;
+    padding: clamp(16px, 2.6vw, 20px) clamp(30px, 5vw, 44px);
+    font-size: clamp(15px, 2.5vw, 18px);
   }
 
   .site-footer__form-row {

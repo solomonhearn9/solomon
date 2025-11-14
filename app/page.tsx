@@ -565,7 +565,19 @@ export default function HomePage() {
                   className="site-footer__collapsible-toggle"
                   aria-expanded={isContactFormOpen}
                   aria-controls={collapsiblePanelId}
-                  onClick={() => setIsContactFormOpen((previous) => !previous)}
+                  onClick={() => {
+                    const wasOpen = isContactFormOpen;
+                    setIsContactFormOpen((previous) => !previous);
+                    if (!wasOpen) {
+                      // Scroll to panel after a brief delay to allow it to render
+                      setTimeout(() => {
+                        const panel = document.getElementById(collapsiblePanelId);
+                        if (panel) {
+                          panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                        }
+                      }, 100);
+                    }
+                  }}
                 >
                   <span>Prefer to stay here?</span>
                   <span className="site-footer__collapsible-icon" aria-hidden="true" />
