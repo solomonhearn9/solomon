@@ -1548,6 +1548,10 @@ a {
 }
 
 @media (max-width: 768px) {
+  .site-header {
+    display: none;
+  }
+
   .site-header__inner {
     padding-inline: 20px;
   }
@@ -1558,18 +1562,30 @@ a {
   }
 
   .landing-hero {
-    padding: 36px 0 0;
-    gap: 32px;
+    padding: 0;
+    gap: 0;
+    overflow: visible;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 0;
   }
 
   .landing-hero__shell {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: clamp(16px, 4vw, 24px);
+    gap: 0;
     position: relative;
-    min-height: calc(100vh - 200px);
+    width: 100%;
+    flex: 1;
+    overflow: visible;
+    min-height: 0;
+    z-index: 0;
   }
 
   .landing-hero__pattern {
@@ -1581,6 +1597,9 @@ a {
     display: flex;
     align-items: stretch;
     z-index: 1;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
   }
 
   .landing-hero__pattern--left {
@@ -1588,12 +1607,17 @@ a {
   }
 
   .landing-hero__pattern--left img {
-    transform: rotate(180deg);
+    transform: rotate(180deg) scaleX(-1);
     width: 52px;
     height: 100%;
-    min-height: 60vh;
-    object-fit: contain;
+    object-fit: cover;
+    object-position: right center;
     display: block;
+    margin: 0;
+    padding: 0;
+    opacity: 1 !important;
+    position: relative;
+    z-index: 1;
   }
 
   .landing-hero__pattern--right {
@@ -1601,42 +1625,105 @@ a {
   }
 
   .landing-hero__pattern--right img {
-    transform: rotate(180deg) scaleX(-1);
+    transform: rotate(180deg);
     width: 52px;
     height: 100%;
-    min-height: 60vh;
-    object-fit: contain;
+    object-fit: cover;
+    object-position: right center;
     display: block;
+    margin: 0;
+    padding: 0;
+    opacity: 1 !important;
+    position: relative;
+    z-index: 1;
   }
 
   .landing-hero__pattern img {
     width: 52px;
     height: 100%;
-    min-height: 60vh;
-    object-fit: contain;
+    object-fit: cover;
     display: block;
-    opacity: 1;
+    opacity: 1 !important;
+    margin: 0;
+    padding: 0;
+    visibility: visible !important;
   }
 
   .landing-hero__core {
     position: relative;
-    z-index: 2;
-    flex: 1;
-    min-width: 0;
-    padding: 0 clamp(20px, 5vw, 32px);
+    z-index: 10;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(24px, 5vw, 32px);
+    padding: 0 clamp(16px, 4vw, 32px);
+    text-align: center;
+    box-sizing: border-box;
   }
 
   .landing-hero__logo {
-    width: clamp(180px, 45vw, 280px);
+    width: clamp(360px, 75vw, 540px);
+    max-width: 90vw;
+    margin: 0 auto;
+    margin-top: clamp(-56px, -8vw, -40px);
   }
 
   .landing-hero__title {
-    font-size: 42px;
+    font-size: clamp(48px, 9vw, 58px);
     letter-spacing: 0.11em;
+    margin: 0;
+    margin-top: clamp(24px, 4vw, 32px);
   }
 
   .landing-hero__subtitle {
-    font-size: 17px;
+    font-size: clamp(18px, 3.5vw, 21px);
+    line-height: 1.75;
+    margin: 0;
+    max-width: calc(100% - 32px);
+    padding: 0 clamp(16px, 4vw, 24px);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: none;
+    text-align: center;
+  }
+
+  .landing-hero__subtitle br {
+    display: block;
+    content: "";
+    margin-top: 0.5em;
+  }
+
+  .landing-hero__cta-button {
+    margin-top: clamp(16px, 3vw, 24px);
+    padding: clamp(8px, 1.5vw, 12px) clamp(18px, 4vw, 24px);
+    font-size: clamp(11px, 2.5vw, 13px);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .landing-hero__cta-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .landing-hero__brands {
+    align-self: stretch;
+    width: 100vw;
+    margin-left: calc((100vw - 100%) / -2);
+    margin-top: auto;
+    padding: 0;
+    flex-shrink: 0;
   }
 
   .logo-marquee {
@@ -1786,20 +1873,46 @@ a {
   }
 
   .landing-hero__logo {
-    width: 68px;
+    width: clamp(320px, 70vw, 420px);
+    max-width: 85vw;
   }
 
   .landing-hero__title {
-    font-size: 36px;
+    font-size: clamp(44px, 8vw, 52px);
     letter-spacing: 0.1em;
   }
 
   .landing-hero__subtitle {
-    font-size: 16px;
+    font-size: clamp(17px, 3.2vw, 20px);
+    line-height: 1.75;
+    padding: 0 clamp(16px, 4vw, 24px);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: none;
+    max-width: calc(100% - 32px);
   }
 
   .landing-hero__pattern {
-    display: none;
+    display: flex !important;
+    position: absolute;
+    z-index: 1;
+  }
+
+  .landing-hero__pattern--left img {
+    transform: rotate(180deg) scaleX(-1) !important;
+    width: 48px;
+    height: 100%;
+    opacity: 1 !important;
+    visibility: visible !important;
+    object-position: right center;
+  }
+
+  .landing-hero__pattern--right img {
+    transform: rotate(180deg) !important;
+    width: 48px;
+    height: 100%;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 
   .logo-track {
@@ -2118,6 +2231,51 @@ a {
 }
 
 @media (max-width: 480px) {
+  .landing-hero__logo {
+    width: clamp(280px, 65vw, 360px);
+    max-width: 80vw;
+  }
+
+  .landing-hero__title {
+    font-size: clamp(40px, 7vw, 48px);
+  }
+
+  .landing-hero__subtitle {
+    font-size: clamp(16px, 3vw, 19px);
+    line-height: 1.8;
+    padding: 0 clamp(16px, 4vw, 24px);
+    hyphens: none;
+    max-width: calc(100% - 32px);
+  }
+
+  .landing-hero__core {
+    padding: 0 clamp(12px, 3vw, 20px);
+    gap: clamp(20px, 4vw, 28px);
+  }
+
+  .landing-hero__pattern {
+    display: flex !important;
+    position: absolute;
+    z-index: 1;
+  }
+
+  .landing-hero__pattern--left img {
+    transform: rotate(180deg) scaleX(-1) !important;
+    width: 44px;
+    height: 100%;
+    opacity: 1 !important;
+    visibility: visible !important;
+    object-position: right center;
+  }
+
+  .landing-hero__pattern--right img {
+    transform: rotate(180deg) !important;
+    width: 44px;
+    height: 100%;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
   .site-footer {
     padding: clamp(100px, 26vw, 160px) clamp(18px, 5vw, 32px) clamp(50px, 12vw, 80px);
   }

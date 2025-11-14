@@ -8,6 +8,7 @@ import { AnimatedHeadline } from "@/components/ui/animated-headline";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { ServicesTypingContent } from "@/components/ui/services-typing-content";
 import { SiteHeaderCta } from "@/components/site-header-cta";
+import ClassicLoader from "@/components/ui/loader";
 import Image from "next/image";
 
 type MarqueeItem =
@@ -91,6 +92,7 @@ export default function HomePage() {
   const [formErrors, setFormErrors] = useState<Partial<Record<keyof ContactFormFields, string>>>({});
   const [isMobile, setIsMobile] = useState(false);
   const [titleAnimationComplete, setTitleAnimationComplete] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const shouldReduceMotion = useReducedMotion();
 
   const fieldIds = {
@@ -152,6 +154,32 @@ export default function HomePage() {
     return () => {
       if (typeof window !== "undefined") {
         window.removeEventListener("resize", checkMobile);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    // Hide loading screen after page is ready and images are loaded
+    const hideLoader = () => {
+      setIsLoading(false);
+    };
+
+    // Wait for window to be ready
+    if (typeof window !== "undefined") {
+      // Check if images are already loaded
+      if (document.readyState === "complete") {
+        // Small delay to ensure smooth transition
+        setTimeout(hideLoader, 200);
+      } else {
+        window.addEventListener("load", () => {
+          setTimeout(hideLoader, 200);
+        });
+      }
+    }
+
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("load", hideLoader);
       }
     };
   }, []);
@@ -259,6 +287,14 @@ export default function HomePage() {
     setFormErrors({});
   };
 
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
+        <ClassicLoader />
+      </div>
+    );
+  }
+
   return (
     <>
       <header className="site-header">
@@ -332,8 +368,35 @@ export default function HomePage() {
                 key={titleAnimationComplete ? "complete" : "waiting"}
                 style={{ willChange: "opacity, transform" }}
               >
-                <span style={{ whiteSpace: 'nowrap' }}>Boston-based tech consultant helping local businesses</span> <br/> modernize their online presence.
+                {isMobile ? (
+                  <>
+                    Boston-based tech consultant <br/> helping local businesses <br/> modernize their online presence.
+                  </>
+                ) : (
+                  <>
+                    Boston-based tech consultant helping local businesses <br/> modernize their online presence.
+                  </>
+                )}
               </motion.p>
+              {isMobile && (
+                <motion.button
+                  className="landing-hero__cta-button"
+                  onClick={() => {
+                    const contactSection = document.getElementById("contact");
+                    contactSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+                  animate={shouldReduceMotion ? {} : titleAnimationComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  transition={{
+                    duration: 0.5,
+                    ease: [0.32, 0.16, 0.24, 1],
+                    delay: titleAnimationComplete ? 1.0 : 0
+                  }}
+                  style={{ willChange: "opacity, transform" }}
+                >
+                  Lets Connect
+                </motion.button>
+              )}
             </div>
           </div>
           <div className="landing-hero__brands">
