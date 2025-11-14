@@ -1078,7 +1078,7 @@ a {
   border-radius: 999px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   background: #ffffff;
-  font-size: clamp(11px, 1.3vw, 13px);
+  font-size: clamp(10px, 1.2vw, 12px);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #050505;
@@ -1865,7 +1865,7 @@ a {
   }
 
   .project-tags li {
-    font-size: clamp(11px, 1.5vw, 12px);
+    font-size: clamp(10px, 1.4vw, 11px);
     letter-spacing: 0.08em;
     padding: clamp(8px, 2vw, 10px) clamp(14px, 3vw, 18px);
   }

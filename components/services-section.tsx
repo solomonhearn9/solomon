@@ -116,7 +116,7 @@ const ServicesContent = () => {
   );
 };
 
-const expertiseHighlights = ["Web Design", "SEO", "Branding", "Marketing"];
+const expertiseHighlights = ["Digital Strategy", "SEO", "Brand Identity", "Performance Marketing"];
 
 const easeInOutCubic = (t: number) =>
   t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -281,7 +281,7 @@ const ExpertiseSpotlight = () => {
             style={{ y: containerShift }}
             className="pointer-events-none absolute left-0 top-0 text-xs font-semibold uppercase tracking-[0.35em] text-primary md:text-sm"
           >
-            {isMobile ? "Expert" : "Expert in"}
+            Offering
           </motion.span>
           <ul
             ref={listRef}

@@ -67,7 +67,7 @@ const serviceItems = ["Web Design", "SEO", "Branding", "Marketing"];
 const projects: Project[] = [
   {
     title: "Lane Interior Design",
-    tags: ["Web Design", "Branding", "Marketing"],
+    tags: ["Web Design", "Brand Identity", "Marketing"],
     media: {
       type: "video",
       src: "/lane-demo.webm",
