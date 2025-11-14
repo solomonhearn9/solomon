@@ -459,6 +459,16 @@ export default function HomePage() {
             <div className="projects-grid">
               {projects.map((project, projectIndex) => (
                 <article key={project.title} className="project-card">
+                  {/* Mobile-only header inside project card */}
+                  <div className="project-card__header-mobile">
+                    <h2 className="project-card__title-mobile">
+                      <AnimatedHeadline
+                        prefix="Elevate your value with "
+                        prefixMobile={"Elevate\nyour value"}
+                        words={["Creativity.", "Innovation.", "Strategy.", "Results."]}
+                      />
+                    </h2>
+                  </div>
                   <div
                     className={`project-media${
                       project.media.type === "sequence" ? " project-media--sequence" : ""
