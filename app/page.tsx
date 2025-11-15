@@ -63,7 +63,7 @@ const marqueeItems: MarqueeItem[] = [
   { type: "image", src: "/nsf.webp", alt: "National Science Foundation" }
 ];
 
-const serviceItems = ["Digital Strategy", "SEO", "Brand Identity", "Marketing"];
+const serviceItems = ["Website + Conversion Optimization", "Local Visibility & SEO", "Review & Reputation Systems", "Lead Capture & Automation"];
 
 const projects: Project[] = [
   {
@@ -419,11 +419,11 @@ export default function HomePage() {
               >
                 {isMobile ? (
                   <>
-                    Boston-based tech consultant <br/> helping local businesses <br/> modernize their online presence.
+                    I build digital systems that help <br/> local businesses get found, get <br/> trusted, and get booked.
                   </>
                 ) : (
                   <>
-                    Boston-based tech consultant helping local businesses <br/> modernize their online presence.
+                    I build digital systems that help local businesses get found, get trusted, and get booked.
                   </>
                 )}
               </motion.p>
