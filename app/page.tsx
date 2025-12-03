@@ -60,7 +60,8 @@ const createInitialTouchedState = (): Record<keyof ContactFormFields, boolean> =
 
 const marqueeItems: MarqueeItem[] = [
   { type: "image", src: "/walmart.webp", alt: "Walmart" },
-  { type: "image", src: "/nsf.webp", alt: "National Science Foundation" }
+  { type: "image", src: "/nsf.webp", alt: "National Science Foundation" },
+  { type: "image", src: "/vandy.webp", alt: "Vanderbilt" }
 ];
 
 const serviceItems = ["Website + Conversion Optimization", "Local Visibility & SEO", "Review & Reputation Systems", "Lead Capture & Automation"];
@@ -540,10 +541,21 @@ export default function HomePage() {
                         poster={project.media.poster}
                         autoPlay
                         muted
+                        defaultMuted
                         loop
                         playsInline
-                        preload="metadata"
+                        preload="auto"
                         aria-label={`${project.title} demo video`}
+                        onLoadedMetadata={(e) => {
+                          const video = e.currentTarget;
+                          video.muted = true;
+                          video.play().catch(() => {});
+                        }}
+                        onVolumeChange={(e) => {
+                          if (!e.currentTarget.muted) {
+                            e.currentTarget.muted = true;
+                          }
+                        }}
                       />
                     ) : (
                       <Image
@@ -602,16 +614,8 @@ export default function HomePage() {
                 I reply within a couple business days with a kickoff plan and next steps.
               </p>
               <div className="site-footer__button-group">
-                <a className="site-footer__btn site-footer__btn--primary" href="mailto:hello@solomonhearn.com">
+                <a className="site-footer__btn site-footer__btn--primary" href="mailto:solomonhearn9@gmail.com">
                   Let&apos;s connect
-                </a>
-                <a
-                  className="site-footer__btn site-footer__btn--secondary"
-                  href="Solomon-Hearn-Resume.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Resume
                 </a>
               </div>
               <div className="site-footer__collapsible">

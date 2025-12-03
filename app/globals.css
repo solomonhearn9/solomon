@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Inter:wght@100;200;300;400;500;600;700;800&family=Jura:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -74,7 +74,7 @@ body {
   min-height: 100vh;
   background: #000;
   color: var(--text-primary);
-  font-family: "Anonymous Pro", "Courier New", monospace;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -205,6 +205,7 @@ a {
 
 .landing-hero__title {
   margin: 0;
+  font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
   font-weight: 400;
   font-size: 55px;
   letter-spacing: 0.13em;
@@ -328,7 +329,7 @@ a {
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: rgba(245, 245, 249, 0.75);
-  font-family: "Anonymous Pro", "Courier New", monospace;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 @keyframes marquee {
@@ -457,7 +458,7 @@ a {
 }
 
 .services-card--scroll .services-eyebrow {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: clamp(13px, 1.6vw, 16px);
   letter-spacing: 0.28em;
   text-transform: uppercase;
@@ -470,11 +471,11 @@ a {
 
 .services-card--scroll .services-title {
   margin: 0;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: clamp(32px, 5vw, 56px);
-  font-weight: 200;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+  font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-size: clamp(48px, 7vw, 80px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
   color: #ffffff;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -482,7 +483,7 @@ a {
 
 .services-card--scroll .services-tagline {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: clamp(16px, 2.4vw, 20px);
   letter-spacing: 0.02em;
   text-transform: none;
@@ -518,6 +519,14 @@ a {
   color: rgba(255, 255, 255, 0.52);
 }
 
+/* Desktop-only: make category/eyebrow text smaller */
+@media (min-width: 1025px) {
+  /* This targets the small category label like "Offering" in the services section */
+  .services-card--scroll .services-eyebrow {
+    font-size: clamp(6px, 0.8vw, 10px);
+  }
+}
+
 .services-title {
   margin: 0;
   font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
@@ -530,6 +539,7 @@ a {
 
 .services-tagline {
   margin: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 16px;
   line-height: 1.8;
   color: var(--text-secondary);
@@ -565,6 +575,7 @@ a {
   padding: 0;
   border: none;
   border-radius: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   letter-spacing: 0.34em;
   font-size: clamp(16px, 2vw, 20px);
   text-transform: uppercase;
@@ -575,7 +586,7 @@ a {
 .services-card--scroll .expert-label {
   display: inline-flex;
   align-items: center;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: clamp(14px, 1.7vw, 17px);
   letter-spacing: 0.32em;
   color: rgba(255, 255, 255, 0.7);
@@ -597,7 +608,7 @@ a {
 }
 
 .service-item {
-  font-family: "Space Mono", "Roboto Mono", monospace;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   padding: clamp(22px, 3vw, 32px) clamp(28px, 4vw, 44px);
   border-radius: 28px;
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -628,7 +639,7 @@ a {
   border-radius: 0;
   border: none;
   background: transparent;
-  font-family: "Playfair Display", "Times New Roman", serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: clamp(36px, 5.5vw, 64px);
   font-weight: 500;
   letter-spacing: -0.01em;
@@ -755,7 +766,7 @@ a {
   margin: 0 auto;
   margin-left: 3ch;
   margin-top: -2ch;
-  font-family: "Playfair Display", "Times New Roman", serif;
+  font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
   font-size: clamp(32px, 3.5vw, 42px);
   letter-spacing: 0.02em;
   color: var(--text-primary);
@@ -788,7 +799,7 @@ a {
 }
 
 .projects-dynamic-prefix {
-  font-family: "Playfair Display", "Times New Roman", serif;
+  font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
 }
 
 .projects-dynamic-prefix-desktop {
@@ -838,7 +849,7 @@ a {
 
   .projects-dynamic-with-mobile {
     display: inline;
-    font-family: "Playfair Display", "Times New Roman", serif;
+    font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
     font-size: clamp(32px, 8vw, 40px);
     line-height: 1.2;
     letter-spacing: -0.01em;
@@ -902,7 +913,7 @@ a {
     bottom: -0.5em;
     width: 100%;
     height: auto;
-    font-family: "Playfair Display", "Times New Roman", serif;
+    font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
     font-size: clamp(32px, 8vw, 40px);
     line-height: 1.2;
     font-weight: 400;
@@ -939,7 +950,7 @@ a {
   display: inline-flex;
   align-items: flex-end;
   justify-content: flex-start;
-  font-family: "Playfair Display", "Times New Roman", serif;
+  font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.02em;
   color: var(--text-primary);
@@ -1098,54 +1109,21 @@ a {
 
 .site-footer {
   position: relative;
-  background: 
-    radial-gradient(ellipse at 15% 25%, rgba(255, 178, 107, 0.08) 0%, transparent 45%),
-    radial-gradient(ellipse at 85% 75%, rgba(112, 134, 255, 0.1) 0%, transparent 45%),
-    radial-gradient(ellipse at 50% 50%, rgba(88, 110, 255, 0.06) 0%, transparent 55%),
-    linear-gradient(135deg, #0a0a0d 0%, #0c0c0f 25%, #0a0a0d 50%, #0c0c0f 75%, #0a0a0d 100%);
-  background-size: 100% 100%, 100% 100%, 100% 100%, 200% 200%;
-  background-position: 0% 0%, 100% 100%, 50% 50%, 0% 0%;
+  background: #000;
   padding: clamp(120px, 20vw, 220px) clamp(20px, 8vw, 120px) clamp(20px, 3vw, 24px);
   color: var(--text-primary);
   overflow: hidden;
   min-height: 400px;
   /* Ensure footer is visible by default - animation will enhance it */
   opacity: 1;
-  animation: footerBackgroundShift 20s ease-in-out infinite;
 }
 
 .site-footer::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: 
-    radial-gradient(circle at 20% 30%, rgba(255, 178, 107, 0.12) 0%, transparent 45%),
-    radial-gradient(circle at 80% 70%, rgba(112, 134, 255, 0.14) 0%, transparent 45%),
-    radial-gradient(circle at 50% 50%, rgba(88, 110, 255, 0.08) 0%, transparent 55%);
-  opacity: 0.9;
-  pointer-events: none;
-  z-index: 0;
-  animation: footerGradientShift 10s ease-in-out infinite alternate;
+  content: none;
 }
 
 .site-footer::after {
-  content: "";
-  position: absolute;
-  inset: -200px 0 -48px 0;
-  background-image: url("/zig2-rotated.webp");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 80% 180%;
-  opacity: 0.18;
-  filter: saturate(0.15) brightness(0.55) contrast(1.25);
-  mix-blend-mode: screen;
-  pointer-events: none;
-  z-index: 0;
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.25) 8%, rgba(0, 0, 0, 0.5) 18%, #000 28%, #000 72%, rgba(0, 0, 0, 0.5) 82%, rgba(0, 0, 0, 0) 100%);
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.25) 8%, rgba(0, 0, 0, 0.5) 18%, #000 28%, #000 72%, rgba(0, 0, 0, 0.5) 82%, rgba(0, 0, 0, 0) 100%);
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  animation: footerPatternFloat 14s ease-in-out infinite;
+  content: none;
 }
 
 @keyframes footerBackgroundShift {
@@ -1185,9 +1163,7 @@ a {
 
 @media (min-width: 769px) {
   .site-footer::after {
-    background-size: 100% 100%;
-    background-position: center center;
-    inset: 0;
+    content: none;
   }
 }
 
@@ -1324,7 +1300,7 @@ a {
 
 .site-footer__title {
   margin: 0;
-  font-family: "Playfair Display", "Times New Roman", serif;
+  font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
   font-size: clamp(48px, 8vw, 96px);
   font-weight: 400;
   letter-spacing: 0.02em;
@@ -1656,6 +1632,17 @@ a {
   background: rgba(255, 255, 255, 0.08);
 }
 
+
+@media (min-width: 769px) {
+  .landing-hero__title {
+    line-height: 1.2;
+  }
+
+  .landing-hero__subtitle {
+    margin-top: clamp(0px, 1vw, 6px);
+  }
+}
+
 @media (max-width: 1024px) {
   .landing-hero__pattern img {
     width: min(200px, 26vw);
@@ -1935,13 +1922,15 @@ a {
 
   /* Mobile Typography Hierarchy - Main Headline */
   .services-card--scroll .services-title {
-    font-size: clamp(32px, 6.5vw, 44px);
-    line-height: 1.4375;
-    letter-spacing: 0.0025em;
+    font-size: clamp(40px, 8vw, 56px);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
     margin-top: clamp(8px, 1.5vw, 12px);
     margin-bottom: 0;
     color: #ffffff;
     text-align: left;
+    font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 400;
   }
 
   /* Mobile Typography Hierarchy - Tagline */
@@ -1978,7 +1967,8 @@ a {
 
   /* Mobile Typography Hierarchy - Expert Label */
   .services-card--scroll .expert-label {
-    font-size: clamp(14px, 2vw, 18px);
+    /* Slightly larger to balance against category size on mobile */
+    font-size: clamp(15px, 2.4vw, 18px);
     letter-spacing: 0.3em;
     color: rgba(255, 255, 255, 0.85);
     margin-left: -0.6em;
@@ -1992,25 +1982,36 @@ a {
   .services-card--scroll .services-list {
     gap: clamp(28px, 5vw, 36px);
     padding-top: clamp(4px, 1vw, 8px);
+    /* add subtle separation from the "Offering" label */
+    margin-left: 5px;
   }
 
   /* Mobile Typography Hierarchy - Service Items */
   .services-card--scroll .service-item--scroll {
-    font-size: clamp(34px, 7vw, 44px);
+    /* Reduce category text for a cleaner, more minimalist balance */
+    font-size: clamp(30px, 6vw, 40px);
+    /* modern sans-serif to match site aesthetic on mobile */
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 600;
     line-height: 1.12;
     padding: clamp(14px, 2.8vw, 20px) 0;
   }
 
   .services-card--scroll .service-item--scroll.is-active {
-    font-size: clamp(36px, 7.5vw, 46px);
+    /* Keep active state slightly larger but still restrained */
+    font-size: clamp(32px, 6.5vw, 42px);
   }
 
   .services-card--scroll .service-item--scroll::after {
+    /* Thinner underline for minimal look on mobile */
     transform: scaleX(1);
+    height: 1px;
   }
+  .services-card--scroll .service-item__underline { height: 1px; }
 
   .services-section {
-    padding: clamp(300px, 28vw, 380px) 24px clamp(264px, 32vw, 280px);
+    /* Increase top padding slightly to reveal the card on small viewports */
+    padding: clamp(320px, 30vw, 400px) 24px clamp(264px, 32vw, 280px);
     margin-top: 0;
   }
 
@@ -2018,7 +2019,8 @@ a {
     background-image: url("/zig2.webp");
     background-size: 100% 160%;
     background-position: center center;
-    top: -260px;
+    /* Nudge the background down a bit so it doesn't overlap the card header */
+    top: -236px;
     bottom: -48px;
     left: 50%;
     right: auto;
@@ -2322,7 +2324,8 @@ a {
   }
 
   .services-section {
-    padding: clamp(180px, 22vw, 240px) 18px clamp(174px, 26vw, 214px);
+    /* Slightly more top padding on very small phones to prevent clipping */
+    padding: clamp(200px, 24vw, 260px) 18px clamp(174px, 26vw, 214px);
   }
 
   .services-card {
@@ -2453,12 +2456,13 @@ a {
     color: #050505;
     border-radius: 999px;
     border: none;
+    font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
   }
 }
 
 .site-footer {
   position: relative;
-  background: #0c0c0f;
+  background: #000;
   padding: clamp(120px, 20vw, 220px) clamp(20px, 8vw, 120px) 10px;
   color: var(--text-primary);
   overflow: hidden;
@@ -2558,9 +2562,7 @@ a {
   }
 
   .site-footer::after {
-    background-size: 100% 160%;
-    background-position: center center;
-    opacity: 0.2;
+    content: none;
   }
 
   .site-footer__inner {
@@ -2578,7 +2580,7 @@ a {
   }
 
   .site-footer__title {
-    font-family: "Playfair Display", "Times New Roman", serif;
+    font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
     font-size: clamp(42px, 11vw, 64px);
     font-weight: 400;
     line-height: 1.1;
@@ -2898,6 +2900,7 @@ a {
 
   .site-footer__title {
     font-size: clamp(38px, 11vw, 64px);
+    font-family: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
   }
 
   .site-footer__subtitle {
