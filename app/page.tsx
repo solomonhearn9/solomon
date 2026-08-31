@@ -35,6 +35,7 @@ type Project = {
   title: string;
   tags: string[];
   media: ProjectMedia;
+  href?: string;
 };
 
 type ContactFormFields = {
@@ -75,6 +76,26 @@ const projects: Project[] = [
       src: "/lane-demo.webm",
       poster: "/sophia1.webp"
     }
+  },
+  {
+    title: "Foundri",
+    tags: ["Web Design", "Brand Identity", "Product"],
+    href: "https://foundri.me",
+    media: {
+      type: "video",
+      src: "/foundri_vid.webm",
+      poster: "/foundri-poster.webp"
+    }
+  },
+  {
+    title: "Susan Drew Szwed",
+    tags: ["Web Design", "Brand Identity", "Marketing"],
+    href: "https://www.susandrewszwed.com",
+    media: {
+      type: "video",
+      src: "/gram_vid.webm",
+      poster: "/susan-poster.webp"
+    }
   }
 ];
 
@@ -83,6 +104,7 @@ export default function HomePage() {
   const idBase = useId();
 
   const contactSectionRef = useRef<HTMLElement | null>(null);
+  const successDialogRef = useRef<HTMLDivElement | null>(null);
   const [isContactVisible, setIsContactVisible] = useState(false);
   const [isContactFormOpen, setIsContactFormOpen] = useState(false);
   const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success">("idle");
@@ -112,6 +134,7 @@ export default function HomePage() {
 
   const collapsiblePanelId = `${idBase}-footer-panel`;
   const successMessageId = `${idBase}-footer-success`;
+  const isSuccessModalOpen = formStatus === "success";
 
   const contactMotionProps = shouldReduceMotion
     ? {}
@@ -337,6 +360,45 @@ export default function HomePage() {
     setFormErrors({});
   };
 
+  useEffect(() => {
+    if (!isSuccessModalOpen) {
+      return;
+    }
+
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    const dialog = successDialogRef.current;
+    const focusTarget =
+      dialog?.querySelector<HTMLElement>("button, [href], input, textarea, [tabindex]:not([tabindex='-1'])") ??
+      dialog;
+    focusTarget?.focus();
+
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    const previousOverflow = document.body.style.overflow;
+    const previousPaddingRight = document.body.style.paddingRight;
+    document.body.style.overflow = "hidden";
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setFormStatus("idle");
+        setFormData(createInitialContactForm());
+        setTouchedFields(createInitialTouchedState());
+        setFormErrors({});
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.body.style.paddingRight = previousPaddingRight;
+      window.removeEventListener("keydown", handleKeyDown);
+      previouslyFocused?.focus?.();
+    };
+  }, [isSuccessModalOpen]);
+
   if (isLoading) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
@@ -469,7 +531,14 @@ export default function HomePage() {
                     }`}
                   >
                     {item.type === "image" ? (
-                      <Image src={item.src} alt={item.alt} width={160} height={42} />
+                      <Image
+                        src={item.src}
+                        alt={item.alt}
+                        width={160}
+                        height={42}
+                        unoptimized
+                        priority
+                      />
                     ) : (
                       item.label
                     )}
@@ -518,55 +587,72 @@ export default function HomePage() {
                   <div
                     className={`project-media${
                       project.media.type === "sequence" ? " project-media--sequence" : ""
-                    }`}
+                    }${project.href ? " project-media--link" : ""}`}
                   >
-                    {project.media.type === "sequence" ? (
-                      <div className="project-sequence">
-                        {project.media.images.map((image, imageIndex) => (
-                          <Image
-                            key={image.src}
-                            src={image.src}
-                            alt={image.alt}
-                            fill
-                            className="project-sequence__image"
-                            sizes="(max-width: 768px) 100vw, 720px"
-                            priority={projectIndex === 0 && imageIndex === 0}
+                    {(() => {
+                      const mediaContent =
+                        project.media.type === "sequence" ? (
+                          <div className="project-sequence">
+                            {project.media.images.map((image, imageIndex) => (
+                              <Image
+                                key={image.src}
+                                src={image.src}
+                                alt={image.alt}
+                                fill
+                                className="project-sequence__image"
+                                sizes="(max-width: 768px) 100vw, 720px"
+                                priority={projectIndex === 0 && imageIndex === 0}
+                              />
+                            ))}
+                          </div>
+                        ) : project.media.type === "video" ? (
+                          <video
+                            className="project-video"
+                            src={project.media.src}
+                            poster={project.media.poster}
+                            autoPlay
+                            muted
+                            defaultMuted
+                            loop
+                            playsInline
+                            preload="auto"
+                            aria-label={`${project.title} demo video`}
+                            onLoadedMetadata={(e) => {
+                              const video = e.currentTarget;
+                              video.muted = true;
+                              video.play().catch(() => {});
+                            }}
+                            onVolumeChange={(e) => {
+                              if (!e.currentTarget.muted) {
+                                e.currentTarget.muted = true;
+                              }
+                            }}
                           />
-                        ))}
-                      </div>
-                    ) : project.media.type === "video" ? (
-                      <video
-                        className="project-video"
-                        src={project.media.src}
-                        poster={project.media.poster}
-                        autoPlay
-                        muted
-                        defaultMuted
-                        loop
-                        playsInline
-                        preload="auto"
-                        aria-label={`${project.title} demo video`}
-                        onLoadedMetadata={(e) => {
-                          const video = e.currentTarget;
-                          video.muted = true;
-                          video.play().catch(() => {});
-                        }}
-                        onVolumeChange={(e) => {
-                          if (!e.currentTarget.muted) {
-                            e.currentTarget.muted = true;
-                          }
-                        }}
-                      />
-                    ) : (
-                      <Image
-                        src={project.media.images[0]?.src ?? ""}
-                        alt={project.media.images[0]?.alt ?? project.title}
-                        width={1600}
-                        height={1000}
-                        className="project-image"
-                        priority={projectIndex === 0}
-                      />
-                    )}
+                        ) : (
+                          <Image
+                            src={project.media.images[0]?.src ?? ""}
+                            alt={project.media.images[0]?.alt ?? project.title}
+                            width={1600}
+                            height={1000}
+                            className="project-image"
+                            priority={projectIndex === 0}
+                          />
+                        );
+
+                      return project.href ? (
+                        <a
+                          className="project-media__link"
+                          href={project.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Open ${project.title} website`}
+                        >
+                          {mediaContent}
+                        </a>
+                      ) : (
+                        mediaContent
+                      );
+                    })()}
                   </div>
                   <div className="project-copy">
                     <h3 className="project-title">{project.title}</h3>
@@ -647,125 +733,110 @@ export default function HomePage() {
                   aria-hidden={!isContactFormOpen}
                 >
                   <div className="site-footer__collapsible-content">
-                    {formStatus === "success" ? (
-                      <div
-                        className="site-footer__form-success"
-                        role="status"
-                        aria-live="polite"
-                        id={successMessageId}
-                      >
-                        <strong>Message received</strong>
-                        <p>I&apos;ll reach out within two business days with next steps.</p>
-                        <button type="button" className="site-footer__form-reset" onClick={handleReset}>
-                          Send another note
-                        </button>
-                      </div>
-                    ) : (
-                      <form className="site-footer__form" noValidate onSubmit={handleSubmit}>
-                        <div className="site-footer__form-row">
-                          <div className="site-footer__field">
-                            <label className="site-footer__label" htmlFor={fieldIds.name}>
-                              Name
-                            </label>
-                            <input
-                              id={fieldIds.name}
-                              name="name"
-                              className="site-footer__input"
-                              type="text"
-                              autoComplete="name"
-                              value={formData.name}
-                              onChange={handleFieldChange("name")}
-                              onBlur={() => handleFieldBlur("name")}
-                              aria-invalid={Boolean(formErrors.name)}
-                              aria-describedby={formErrors.name ? errorIds.name : undefined}
-                              tabIndex={isContactFormOpen ? 0 : -1}
-                            />
-                            {formErrors.name && touchedFields.name ? (
-                              <span className="site-footer__field-error" id={errorIds.name}>
-                                {formErrors.name}
-                              </span>
-                            ) : null}
-                          </div>
-                          <div className="site-footer__field">
-                            <label className="site-footer__label" htmlFor={fieldIds.email}>
-                              Email
-                            </label>
-                            <input
-                              id={fieldIds.email}
-                              name="email"
-                              className="site-footer__input"
-                              type="email"
-                              autoComplete="email"
-                              value={formData.email}
-                              onChange={handleFieldChange("email")}
-                              onBlur={() => handleFieldBlur("email")}
-                              aria-invalid={Boolean(formErrors.email)}
-                              aria-describedby={formErrors.email ? errorIds.email : undefined}
-                              inputMode="email"
-                              tabIndex={isContactFormOpen ? 0 : -1}
-                            />
-                            {formErrors.email && touchedFields.email ? (
-                              <span className="site-footer__field-error" id={errorIds.email}>
-                                {formErrors.email}
-                              </span>
-                            ) : null}
-                          </div>
-                        </div>
+                    <form className="site-footer__form" noValidate onSubmit={handleSubmit}>
+                      <div className="site-footer__form-row">
                         <div className="site-footer__field">
-                          <label className="site-footer__label" htmlFor={fieldIds.business}>
-                            Business
+                          <label className="site-footer__label" htmlFor={fieldIds.name}>
+                            Name
                           </label>
                           <input
-                            id={fieldIds.business}
-                            name="business"
+                            id={fieldIds.name}
+                            name="name"
                             className="site-footer__input"
                             type="text"
-                            autoComplete="organization"
-                            value={formData.business}
-                            onChange={handleFieldChange("business")}
-                            onBlur={() => handleFieldBlur("business")}
-                            aria-invalid={Boolean(formErrors.business)}
-                            aria-describedby={formErrors.business ? errorIds.business : undefined}
+                            autoComplete="name"
+                            value={formData.name}
+                            onChange={handleFieldChange("name")}
+                            onBlur={() => handleFieldBlur("name")}
+                            aria-invalid={Boolean(formErrors.name)}
+                            aria-describedby={formErrors.name ? errorIds.name : undefined}
                             tabIndex={isContactFormOpen ? 0 : -1}
                           />
-                          {formErrors.business && touchedFields.business ? (
-                            <span className="site-footer__field-error" id={errorIds.business}>
-                              {formErrors.business}
+                          {formErrors.name && touchedFields.name ? (
+                            <span className="site-footer__field-error" id={errorIds.name}>
+                              {formErrors.name}
                             </span>
                           ) : null}
                         </div>
                         <div className="site-footer__field">
-                          <label className="site-footer__label" htmlFor={fieldIds.message}>
-                            Message
+                          <label className="site-footer__label" htmlFor={fieldIds.email}>
+                            Email
                           </label>
-                          <textarea
-                            id={fieldIds.message}
-                            name="message"
-                            className="site-footer__textarea"
-                            rows={3}
-                            value={formData.message}
-                            onChange={handleFieldChange("message")}
-                            onBlur={() => handleFieldBlur("message")}
-                            aria-invalid={Boolean(formErrors.message)}
-                            aria-describedby={formErrors.message ? errorIds.message : undefined}
+                          <input
+                            id={fieldIds.email}
+                            name="email"
+                            className="site-footer__input"
+                            type="email"
+                            autoComplete="email"
+                            value={formData.email}
+                            onChange={handleFieldChange("email")}
+                            onBlur={() => handleFieldBlur("email")}
+                            aria-invalid={Boolean(formErrors.email)}
+                            aria-describedby={formErrors.email ? errorIds.email : undefined}
+                            inputMode="email"
                             tabIndex={isContactFormOpen ? 0 : -1}
                           />
-                          {formErrors.message && touchedFields.message ? (
-                            <span className="site-footer__field-error" id={errorIds.message}>
-                              {formErrors.message}
+                          {formErrors.email && touchedFields.email ? (
+                            <span className="site-footer__field-error" id={errorIds.email}>
+                              {formErrors.email}
                             </span>
                           ) : null}
                         </div>
-                        <button
-                          className="site-footer__form-submit"
-                          type="submit"
-                          disabled={formStatus === "submitting"}
+                      </div>
+                      <div className="site-footer__field">
+                        <label className="site-footer__label" htmlFor={fieldIds.business}>
+                          Business
+                        </label>
+                        <input
+                          id={fieldIds.business}
+                          name="business"
+                          className="site-footer__input"
+                          type="text"
+                          autoComplete="organization"
+                          value={formData.business}
+                          onChange={handleFieldChange("business")}
+                          onBlur={() => handleFieldBlur("business")}
+                          aria-invalid={Boolean(formErrors.business)}
+                          aria-describedby={formErrors.business ? errorIds.business : undefined}
                           tabIndex={isContactFormOpen ? 0 : -1}
-                        >
-                          {formStatus === "submitting" ? "Sending..." : "Submit"}
-                        </button>
-                      </form>
-                    )}
+                        />
+                        {formErrors.business && touchedFields.business ? (
+                          <span className="site-footer__field-error" id={errorIds.business}>
+                            {formErrors.business}
+                          </span>
+                        ) : null}
+                      </div>
+                      <div className="site-footer__field">
+                        <label className="site-footer__label" htmlFor={fieldIds.message}>
+                          Message
+                        </label>
+                        <textarea
+                          id={fieldIds.message}
+                          name="message"
+                          className="site-footer__textarea"
+                          rows={3}
+                          value={formData.message}
+                          onChange={handleFieldChange("message")}
+                          onBlur={() => handleFieldBlur("message")}
+                          aria-invalid={Boolean(formErrors.message)}
+                          aria-describedby={formErrors.message ? errorIds.message : undefined}
+                          tabIndex={isContactFormOpen ? 0 : -1}
+                        />
+                        {formErrors.message && touchedFields.message ? (
+                          <span className="site-footer__field-error" id={errorIds.message}>
+                            {formErrors.message}
+                          </span>
+                        ) : null}
+                      </div>
+                      <button
+                        className="site-footer__form-submit"
+                        type="submit"
+                        disabled={formStatus === "submitting"}
+                        tabIndex={isContactFormOpen ? 0 : -1}
+                      >
+                        {formStatus === "submitting" ? "Sending..." : "Submit"}
+                      </button>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -773,6 +844,35 @@ export default function HomePage() {
           </div>
         </div>
       </motion.footer>
+
+      {isSuccessModalOpen ? (
+        <div
+          className="contact-success-modal"
+          role="presentation"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) {
+              handleReset();
+            }
+          }}
+        >
+          <div
+            ref={successDialogRef}
+            className="contact-success-modal__dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={successMessageId}
+            tabIndex={-1}
+          >
+            <div className="contact-success-modal__content" role="status" aria-live="polite">
+              <strong id={successMessageId}>Message received</strong>
+              <p>I&apos;ll reach out within two business days with next steps.</p>
+              <button type="button" className="contact-success-modal__close" onClick={handleReset}>
+                Send another note
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </>
   );
 }
