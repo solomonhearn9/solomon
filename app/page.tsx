@@ -612,7 +612,6 @@ export default function HomePage() {
                             poster={project.media.poster}
                             autoPlay
                             muted
-                            defaultMuted
                             loop
                             playsInline
                             preload="auto"
