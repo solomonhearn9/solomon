@@ -2180,7 +2180,7 @@ a {
     flex: 1;
     min-height: 0;
     justify-content: flex-start;
-    gap: 0;
+    gap: clamp(48px, 10vw, 72px);
   }
 
   .project-card {
@@ -2190,12 +2190,12 @@ a {
     align-items: center;
   }
 
-  /* Mobile header inside project card */
+  /* Mobile header once above the project stack */
   .project-card__header-mobile {
     display: block;
     width: 100%;
     text-align: left;
-    margin-bottom: clamp(32px, 6vw, 48px);
+    margin-bottom: 0;
     padding: 0 clamp(16px, 4vw, 24px);
   }
 
@@ -2309,10 +2309,10 @@ a {
 
   /* Video window styling - landscape aspect ratio, perfectly centered */
   .project-media {
-    width: min(100%, 360px);
+    width: 100%;
     max-width: calc(100vw - clamp(32px, 10vw, 64px));
     aspect-ratio: 16 / 9;
-    max-height: 38vh;
+    max-height: none;
     border-radius: 4px;
     background: #000;
     margin: 0 auto clamp(24px, 4vw, 32px);
@@ -2325,7 +2325,7 @@ a {
   .project-media video {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     display: block;
     background: #000;
   }
@@ -2333,7 +2333,7 @@ a {
   .project-media img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     background: #000;
   }
 
@@ -2511,7 +2511,7 @@ a {
     flex: 1;
     min-height: 0;
     justify-content: flex-start;
-    gap: 0;
+    gap: clamp(40px, 9vw, 64px);
   }
 
   .project-card {
@@ -2523,7 +2523,7 @@ a {
 
   /* Maintain mobile header styling at smaller breakpoint */
   .project-card__header-mobile {
-    margin-bottom: clamp(28px, 5vw, 40px);
+    margin-bottom: 0;
     padding: 0 clamp(12px, 3vw, 20px);
   }
 
@@ -2540,10 +2540,10 @@ a {
   }
 
   .project-media {
-    width: min(100%, 340px);
+    width: 100%;
     max-width: calc(100vw - clamp(32px, 10vw, 64px));
     aspect-ratio: 16 / 9;
-    max-height: 36vh;
+    max-height: none;
     border-radius: 4px;
     background: #000;
     margin: 0 auto clamp(20px, 3.5vw, 28px);

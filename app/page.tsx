@@ -78,7 +78,7 @@ const projects: Project[] = [
     }
   },
   {
-    title: "Foundri",
+    title: "foundri.me",
     tags: ["Web Design", "Brand Identity", "Product"],
     href: "https://foundri.me",
     media: {
@@ -88,7 +88,7 @@ const projects: Project[] = [
     }
   },
   {
-    title: "Susan Drew Szwed",
+    title: "Suzan Szwed Art Site",
     tags: ["Web Design", "Brand Identity", "Marketing"],
     href: "https://www.susandrewszwed.com",
     media: {
@@ -571,19 +571,18 @@ export default function HomePage() {
                 </h2>
               </div>
             </header>
+            <div className="project-card__header-mobile">
+              <h2 className="project-card__title-mobile">
+                <AnimatedHeadline
+                  prefix="Elevate your value with "
+                  prefixMobile={"Elevate\nyour value"}
+                  words={["Creativity.", "Innovation.", "Strategy.", "Results."]}
+                />
+              </h2>
+            </div>
             <div className="projects-grid">
               {projects.map((project, projectIndex) => (
                 <article key={project.title} className="project-card">
-                  {/* Mobile-only header inside project card */}
-                  <div className="project-card__header-mobile">
-                    <h2 className="project-card__title-mobile">
-                      <AnimatedHeadline
-                        prefix="Elevate your value with "
-                        prefixMobile={"Elevate\nyour value"}
-                        words={["Creativity.", "Innovation.", "Strategy.", "Results."]}
-                      />
-                    </h2>
-                  </div>
                   <div
                     className={`project-media${
                       project.media.type === "sequence" ? " project-media--sequence" : ""
