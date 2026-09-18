@@ -387,6 +387,9 @@ a {
   max-width: 1200px;
   margin: 0 auto;
   z-index: 1;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .services-card-shell {
@@ -657,9 +660,12 @@ a {
 }
 
 .services-card--scroll .service-item__label {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .services-card--scroll .service-item__underline {
@@ -705,6 +711,10 @@ a {
 
 .services-card--scroll .service-label {
   font-family: inherit;
+  display: block;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .projects-section {
@@ -1860,10 +1870,10 @@ a {
   }
 
   .landing-hero {
-    padding: 0;
+    padding: 0 0 max(16px, env(safe-area-inset-bottom));
     gap: 0;
     overflow: visible;
-    min-height: 100vh;
+    min-height: 100svh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1963,22 +1973,22 @@ a {
   }
 
   .landing-hero__logo {
-    width: clamp(360px, 75vw, 540px);
-    max-width: 90vw;
+    width: clamp(280px, 62vw, 420px);
+    max-width: 78vw;
     margin: 0 auto;
-    margin-top: clamp(-56px, -8vw, -40px);
+    margin-top: clamp(-24px, -4vw, -12px);
   }
 
   .landing-hero__title {
-    font-size: clamp(48px, 9vw, 58px);
+    font-size: clamp(40px, 8vw, 52px);
     letter-spacing: 0.11em;
     margin: 0;
-    margin-top: clamp(24px, 4vw, 32px);
+    margin-top: clamp(16px, 3vw, 24px);
   }
 
   .landing-hero__subtitle {
-    font-size: clamp(18px, 3.5vw, 21px);
-    line-height: 1.75;
+    font-size: clamp(16px, 3.4vw, 20px);
+    line-height: 1.7;
     margin: 0;
     max-width: calc(100% - 32px);
     padding: 0 clamp(16px, 4vw, 24px);
@@ -1995,9 +2005,13 @@ a {
   }
 
   .landing-hero__cta-button {
-    margin-top: clamp(16px, 3vw, 24px);
+    margin-top: clamp(12px, 2.5vw, 20px);
+    margin-bottom: clamp(8px, 2vw, 16px);
     display: flex;
     justify-content: center;
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
   }
 
   .landing-hero__cta-button-inner {
@@ -2008,16 +2022,45 @@ a {
 
   .landing-hero__brands {
     align-self: stretch;
-    width: 100vw;
-    margin-left: calc((100vw - 100%) / -2);
-    margin-top: calc(-36px - 4em);
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-top: 0;
     margin-bottom: 0;
-    padding: 0;
+    padding: 0 0 max(8px, env(safe-area-inset-bottom));
     flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
   }
 
   .logo-marquee {
     border-radius: 18px;
+    padding: 8px 0;
+  }
+
+  .logo-item {
+    flex: 0 0 clamp(140px, 36vw, 220px);
+  }
+
+  .logo-item img {
+    height: 44px;
+  }
+
+  .logo-item img[alt="National Science Foundation"] {
+    height: 56px;
+  }
+
+  .logo-item img[alt="Vanderbilt"] {
+    height: 48px;
+  }
+
+  .logo-item img[alt="Lane Interior Design"] {
+    height: 52px;
+  }
+
+  .logo-item--walmart img {
+    height: 72px;
   }
 
   .services-card {
@@ -2031,8 +2074,12 @@ a {
   }
 
   .services-card.services-card--scroll {
-    padding: clamp(32px, 7vw, 48px) clamp(0px, calc(5vw - 25px), 7px) clamp(40px, 8vw, 56px);
+    padding: clamp(32px, 7vw, 48px) clamp(12px, 4vw, 20px) clamp(40px, 8vw, 56px);
     gap: clamp(56px, 10vw, 80px);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
   /* Mobile Typography Hierarchy - Eyebrow */
@@ -2074,9 +2121,9 @@ a {
   .services-card--scroll .services-card-copy {
     gap: 0;
     margin-bottom: clamp(8px, 1.5vw, 12px);
-    max-width: 90%;
+    max-width: 100%;
     text-align: left;
-    margin-left: -0.6em;
+    margin-left: 0;
   }
 
   .services-expertise {
@@ -2085,46 +2132,73 @@ a {
   }
 
   .services-expertise.services-expertise--scroll {
-    grid-template-columns: minmax(60px, 80px) minmax(0, 1fr);
-    gap: clamp(28px, 6vw, 40px);
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: clamp(16px, 4vw, 28px);
     margin-top: clamp(48px, 8vw, 64px);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
 
   /* Mobile Typography Hierarchy - Expert Label */
   .services-card--scroll .expert-label {
     /* Slightly larger to balance against category size on mobile */
-    font-size: clamp(15px, 2.4vw, 18px);
-    letter-spacing: 0.3em;
+    font-size: clamp(12px, 2.2vw, 15px);
+    letter-spacing: 0.24em;
     color: rgba(255, 255, 255, 0.85);
-    margin-left: -0.6em;
+    margin-left: 0;
   }
 
   .expert-label-wrapper {
     padding-bottom: clamp(16px, 3vw, 20px);
+    min-width: 0;
   }
 
   /* Mobile Spacing - Services List */
   .services-card--scroll .services-list {
     gap: clamp(28px, 5vw, 36px);
     padding-top: clamp(4px, 1vw, 8px);
-    /* add subtle separation from the "Offering" label */
-    margin-left: 5px;
+    margin-left: 0;
+    min-width: 0;
+    max-width: 100%;
   }
 
   /* Mobile Typography Hierarchy - Service Items */
   .services-card--scroll .service-item--scroll {
-    /* Reduce category text for a cleaner, more minimalist balance */
-    font-size: clamp(30px, 6vw, 40px);
+    /* Fit long service names within the mobile viewport */
+    font-size: clamp(22px, 5.6vw, 30px);
     /* modern sans-serif to match site aesthetic on mobile */
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-weight: 600;
-    line-height: 1.12;
-    padding: clamp(14px, 2.8vw, 20px) 0;
+    line-height: 1.18;
+    padding: clamp(12px, 2.4vw, 16px) 0;
+    max-width: 100%;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .services-card--scroll .service-item__label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .services-card--scroll .service-label {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   .services-card--scroll .service-item--scroll.is-active {
     /* Keep active state slightly larger but still restrained */
-    font-size: clamp(32px, 6.5vw, 42px);
+    font-size: clamp(24px, 6vw, 32px);
   }
 
   .services-card--scroll .service-item--scroll::after {
@@ -2397,23 +2471,23 @@ a {
   }
 
   .landing-hero {
-    padding: 32px 0 0;
-    gap: 26px;
+    padding: 24px 0 max(12px, env(safe-area-inset-bottom));
+    gap: 20px;
   }
 
   .landing-hero__logo {
-    width: clamp(320px, 70vw, 420px);
-    max-width: 85vw;
+    width: clamp(260px, 64vw, 360px);
+    max-width: 78vw;
   }
 
   .landing-hero__title {
-    font-size: clamp(44px, 8vw, 52px);
+    font-size: clamp(36px, 8vw, 46px);
     letter-spacing: 0.1em;
   }
 
   .landing-hero__subtitle {
-    font-size: clamp(17px, 3.2vw, 20px);
-    line-height: 1.75;
+    font-size: clamp(16px, 3.2vw, 19px);
+    line-height: 1.7;
     padding: 0 clamp(16px, 4vw, 24px);
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -2468,7 +2542,7 @@ a {
   }
 
   .services-expertise.services-expertise--scroll {
-    gap: clamp(20px, 9vw, 30px);
+    gap: clamp(12px, 4vw, 20px);
   }
 
   .expert-label-wrapper {
@@ -2480,7 +2554,11 @@ a {
   }
 
   .services-card--scroll .service-item--scroll {
-    font-size: clamp(28px, 10vw, 36px);
+    font-size: clamp(20px, 5.4vw, 26px);
+  }
+
+  .services-card--scroll .service-item--scroll.is-active {
+    font-size: clamp(22px, 5.8vw, 28px);
   }
 
   .projects-section {

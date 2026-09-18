@@ -691,7 +691,7 @@ export default function HomePage() {
           </div>
           <div className="site-footer__meta">
             <span className="site-footer__copyright">
-              2025&reg; Solomon Hearn
+              2026&reg; Solomon Hearn
             </span>
             <div className="site-footer__actions" role="group" aria-label="Contact options">
               <p className="site-footer__response-note">
