@@ -96,6 +96,16 @@ const projects: Project[] = [
       src: "/gram_vid.webm",
       poster: "/susan-poster.webp"
     }
+  },
+  {
+    title: "Kadara",
+    tags: ["Web Design", "Brand Identity", "Marketing"],
+    href: "https://kadaracards.com",
+    media: {
+      type: "video",
+      src: "/kadara_vid.webm",
+      poster: "/kadara-poster.webp"
+    }
   }
 ];
 
