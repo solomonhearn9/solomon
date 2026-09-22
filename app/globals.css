@@ -389,7 +389,8 @@ a {
   z-index: 1;
   width: 100%;
   min-width: 0;
-  overflow: hidden;
+  /* Must stay visible so the fold (rotateX) card isn't clipped mid-animation */
+  overflow: visible;
 }
 
 .services-card-shell {

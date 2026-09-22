@@ -9,8 +9,10 @@ type ServicesTypingContentProps = {
   serviceItems: string[];
 };
 
-const animationTriggerThreshold = 0.38;
-const animationCompletionThreshold = 0.9;
+// Finish the offering highlight while the last item is on-screen and the
+// fold card still fills most of the viewport (before it scrolls away).
+const animationTriggerThreshold = 0.36;
+const animationCompletionThreshold = 0.72;
 const revealDelayMs = 160;
 const totalStages = 4;
 

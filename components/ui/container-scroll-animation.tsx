@@ -44,22 +44,23 @@ export const ContainerScroll = ({
     };
   }, []);
 
-  const animationRange = [0, 0.35, 0.6, 0.85, 1];
-  const rotate = useTransform(scrollYProgress, animationRange, [-24, 0, 0, 8, 14]);
-  const scaleValues = isMobile ? [0.85, 0.97, 0.97, 0.94, 0.9] : [1.08, 1, 1, 0.97, 0.94];
+  // Hold the card flat longer, then ease away later so the final offering
+  // highlight still has a generous centered viewport.
+  const animationRange = [0, 0.32, 0.68, 0.88, 1];
+  const rotate = useTransform(scrollYProgress, animationRange, [-24, 0, 0, 6, 12]);
+  const scaleValues = isMobile ? [0.85, 0.97, 0.97, 0.95, 0.92] : [1.08, 1, 1, 0.98, 0.95];
   const scale = useTransform(scrollYProgress, animationRange, scaleValues);
-  const translate = useTransform(scrollYProgress, animationRange, [100, 0, 0, -20, -70]);
+  const translate = useTransform(scrollYProgress, animationRange, [100, 0, 0, -12, -40]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.22, 0.45], [0, 0.85, 1]);
-  const contentTranslate = useTransform(scrollYProgress, [0, 0.35, 0.6, 1], [80, 0, 0, -40]);
   const headerOpacity = useTransform(scrollYProgress, [0, 0.32, 0.5], [1, 1, 0]);
 
   return (
     <div
-      className="relative flex h-[45rem] items-center justify-center p-2 md:h-[60rem] md:p-16"
+      className="relative flex min-h-[45rem] items-center justify-center overflow-visible p-2 md:min-h-[60rem] md:p-16"
       ref={containerRef}
     >
       <div
-        className="relative w-full py-10 md:py-40"
+        className="relative w-full overflow-visible py-10 md:py-40"
         style={{
           perspective: "1000px"
         }}
@@ -70,7 +71,6 @@ export const ContainerScroll = ({
           translate={translate}
           scale={scale}
           contentOpacity={contentOpacity}
-          contentTranslate={contentTranslate}
           scrollProgress={scrollYProgress}
           containerRef={containerRef}
         >
@@ -111,7 +111,6 @@ export const Card = ({
   scale,
   translate,
   contentOpacity,
-  contentTranslate,
   scrollProgress,
   containerRef,
   children
@@ -120,7 +119,6 @@ export const Card = ({
   scale: MotionValue<number>;
   translate: MotionValue<number>;
   contentOpacity: MotionValue<number>;
-  contentTranslate: MotionValue<number>;
   scrollProgress: MotionValue<number>;
   containerRef: React.RefObject<HTMLDivElement>;
   children: React.ReactNode;
@@ -132,17 +130,13 @@ export const Card = ({
           rotateX: rotate,
           scale,
           translateY: translate,
-          transformStyle: "preserve-3d",
           boxShadow:
             "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003"
         }}
-        className="mx-auto -mt-12 w-full max-w-5xl rounded-[46px] border border-[#050505] bg-[#070709] p-[1.5px] shadow-[0_40px_120px_rgba(0,0,0,0.6)] md:p-[1.5px]"
+        className="services-fold-card mx-auto -mt-12 w-full max-w-5xl rounded-[46px] border border-[#050505] bg-[#070709] p-[1.5px] shadow-[0_40px_120px_rgba(0,0,0,0.6)] md:p-[1.5px]"
       >
         <motion.div
-          style={{
-            opacity: contentOpacity,
-            translateY: contentTranslate
-          }}
+          style={{ opacity: contentOpacity }}
           className="services-card-surface h-full w-full overflow-hidden rounded-[40px] text-white"
         >
           {children}
