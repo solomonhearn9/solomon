@@ -648,7 +648,9 @@ a {
   border: none;
   background: transparent;
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: clamp(36px, 5.5vw, 64px);
+  /* Scale with the item width so long words like "Discoverability" stay intact */
+  container-type: inline-size;
+  font-size: clamp(28px, 8.2cqi, 64px);
   font-weight: 500;
   letter-spacing: -0.01em;
   text-transform: none;
@@ -658,6 +660,9 @@ a {
   transition: color 0.35s ease;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
 }
 
 .services-card--scroll .service-item__label {
@@ -715,7 +720,9 @@ a {
   display: block;
   max-width: 100%;
   white-space: normal;
-  overflow-wrap: break-word;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
 }
 
 .projects-section {
@@ -1387,12 +1394,12 @@ a {
 
 .site-footer__response-note {
   margin: 0;
-  font-size: clamp(14px, 1.4vw, 16px);
-  letter-spacing: 0.08em;
+  font-size: clamp(12px, 1.15vw, 15px);
+  letter-spacing: 0.055em;
   text-transform: uppercase;
   color: rgba(245, 245, 249, 0.6);
-  line-height: 1.6;
-  max-width: 320px;
+  line-height: 1.45;
+  max-width: min(100%, clamp(300px, 34vw, 400px));
 }
 
 .site-footer__button-group {
@@ -1829,7 +1836,7 @@ a {
   }
 
   .services-card--scroll .service-item--scroll {
-    font-size: clamp(28px, 6vw, 44px);
+    font-size: clamp(26px, 8.2cqi, 44px);
   }
 
   .projects-section {
@@ -2171,8 +2178,8 @@ a {
 
   /* Mobile Typography Hierarchy - Service Items */
   .services-card--scroll .service-item--scroll {
-    /* Fit long service names within the mobile viewport */
-    font-size: clamp(22px, 5.6vw, 30px);
+    /* Fit long service names within the mobile viewport without splitting words */
+    font-size: clamp(20px, 9cqi, 30px);
     /* modern sans-serif to match site aesthetic on mobile */
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-weight: 600;
@@ -2180,8 +2187,9 @@ a {
     padding: clamp(12px, 2.4vw, 16px) 0;
     max-width: 100%;
     min-width: 0;
-    overflow-wrap: anywhere;
-    word-break: break-word;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
   }
 
   .services-card--scroll .service-item__label {
@@ -2198,13 +2206,14 @@ a {
     width: 100%;
     max-width: 100%;
     white-space: normal;
-    overflow-wrap: anywhere;
-    word-break: break-word;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
   }
 
   .services-card--scroll .service-item--scroll.is-active {
     /* Keep active state slightly larger but still restrained */
-    font-size: clamp(24px, 6vw, 32px);
+    font-size: clamp(22px, 9.5cqi, 32px);
   }
 
   .services-card--scroll .service-item--scroll::after {
@@ -2560,11 +2569,11 @@ a {
   }
 
   .services-card--scroll .service-item--scroll {
-    font-size: clamp(20px, 5.4vw, 26px);
+    font-size: clamp(18px, 9cqi, 26px);
   }
 
   .services-card--scroll .service-item--scroll.is-active {
-    font-size: clamp(22px, 5.8vw, 28px);
+    font-size: clamp(20px, 9.5cqi, 28px);
   }
 
   .projects-section {
@@ -2714,12 +2723,12 @@ a {
 
 .site-footer__response-note {
   margin: 0;
-  font-size: clamp(14px, 1.4vw, 16px);
-  letter-spacing: 0.08em;
+  font-size: clamp(12px, 1.15vw, 15px);
+  letter-spacing: 0.055em;
   text-transform: uppercase;
   color: rgba(245, 245, 249, 0.6);
-  line-height: 1.6;
-  max-width: 320px;
+  line-height: 1.45;
+  max-width: min(100%, clamp(300px, 34vw, 400px));
 }
 
 .site-footer__button-group {

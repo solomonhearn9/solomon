@@ -65,31 +65,22 @@ const marqueeItems: MarqueeItem[] = [
   { type: "image", src: "/vandy.webp", alt: "Vanderbilt" }
 ];
 
-const serviceItems = ["Website + Conversion Optimization", "Local Visibility & SEO", "Review & Reputation Systems", "Lead Capture & Automation"];
+const serviceItems = ["Websites & Landing Pages", "Search & Discoverability", "Prototypes & MVP Development", "AI & Workflow Automation"];
 
 const projects: Project[] = [
   {
-    title: "Lane Interior Design",
-    tags: ["Web Design", "Brand Identity", "Marketing"],
-    media: {
-      type: "video",
-      src: "/lane-demo.webm",
-      poster: "/sophia1.webp"
-    }
-  },
-  {
     title: "foundri.me",
-    tags: ["Web Design", "Brand Identity", "Product"],
+    tags: ["Founder", "AI-Native Apps", "Brand Identity"],
     href: "https://foundri.me",
     media: {
       type: "video",
-      src: "/foundri_vid.webm",
+      src: "/foundri_vid_v2.webm",
       poster: "/foundri-poster.webp"
     }
   },
   {
     title: "Suzan Szwed Art Site",
-    tags: ["Web Design", "Brand Identity", "Marketing"],
+    tags: ["Web Design", "Photo & Image Editing"],
     href: "https://www.susandrewszwed.com",
     media: {
       type: "video",
@@ -99,12 +90,21 @@ const projects: Project[] = [
   },
   {
     title: "Kadara",
-    tags: ["Web Design", "Brand Identity", "Marketing"],
+    tags: ["Digital Strategy", "Customer Retention", "Brand Amplification"],
     href: "https://kadaracards.com",
     media: {
       type: "video",
       src: "/kadara_vid.webm",
       poster: "/kadara-poster.webp"
+    }
+  },
+  {
+    title: "Lane Interior Design",
+    tags: ["Web Design", "Brand Identity"],
+    media: {
+      type: "video",
+      src: "/lane-demo.webm",
+      poster: "/sophia1.webp"
     }
   }
 ];
@@ -492,11 +492,11 @@ export default function HomePage() {
               >
                 {isMobile ? (
                   <>
-                    I build digital systems that help <br/> local businesses get found, get <br/> trusted, and get booked.
+                    I build digital systems that help <br/> businesses get found, get <br/> trusted, and get booked.
                   </>
                 ) : (
                   <>
-                    I build digital systems that help local businesses get found, get trusted, and get booked.
+                    I build digital systems that help businesses get found, get trusted, and get booked.
                   </>
                 )}
               </motion.p>
@@ -705,10 +705,12 @@ export default function HomePage() {
             </span>
             <div className="site-footer__actions" role="group" aria-label="Contact options">
               <p className="site-footer__response-note">
-                I reply within a couple business days with a kickoff plan and next steps.
+                I reply within a couple business days
+                <br />
+                with a kickoff plan and next steps.
               </p>
               <div className="site-footer__button-group">
-                <a className="site-footer__btn site-footer__btn--primary" href="mailto:solomonhearn9@gmail.com">
+                <a className="site-footer__btn site-footer__btn--primary" href="mailto:sol@foundri.me">
                   Let&apos;s connect
                 </a>
               </div>
